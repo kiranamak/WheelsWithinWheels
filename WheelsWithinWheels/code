@@ -1,5 +1,4 @@
 package www.project;
-
 import java.util.Dictionary;
 import java.util.Date;
 public class WWWProject {
@@ -7,7 +6,6 @@ public class WWWProject {
         
     }
 }
-
 class Customer {
     String firstName;
     String lastName;
@@ -18,14 +16,10 @@ class Customer {
     }
     String getFirstName(){return firstName;}
     String getLastName(){return lastName;}
-    int getCustomerNumber(){
-        
-    }
+    int getCustomerNumber(){return customerNumber;}
 }
 interface Transaction {
-    String getReport(){
-        
-    }
+    String getReport(){}
 }
 enum TuneupLevel {SILVER,GOLD,PLATINUM;}
 class RepairPrice {
@@ -79,6 +73,8 @@ class Order implements Transaction {
     TuneupLevel level;
     String comment;
     Date date;
+    boolean completed = false;
+    boolean returned = false;
     Order(int customerNumber, String brand, TuneupLevel level, String comment){
         this.customerNumber = customerNumber;
         this.brand = brand;
@@ -91,13 +87,15 @@ class Order implements Transaction {
         return table.getPrice(brand, level);
     }
     Date getPromisedDate(){}
-    boolean isCompleted(){}
-    int getOrderNumber(){}
-    boolean isReturned(){}
-    Level getRepairLevel(){return level;}
-    String getReport(){
-        
+    boolean isCompleted(){return completed;}
+    void setCompleted(){completed = true;}
+    int getOrderNumber(){
+        //Index from orders array
     }
+    boolean isReturned(){return returned;}
+    void setReturned(){returned = true;}
+    TuneupLevel getRepairLevel(){return level;}
+    String getReport(){}
 }
 class Payment implements Transaction {
     int customerNumber;
@@ -111,7 +109,5 @@ class Payment implements Transaction {
     int getCustomerNumber(){return customerNumber;}
     int getAmount(){return amount;}
     Date getDate(){return date;}
-    String getReport(){
-        
-    }
+    String getReport(){}
 }
