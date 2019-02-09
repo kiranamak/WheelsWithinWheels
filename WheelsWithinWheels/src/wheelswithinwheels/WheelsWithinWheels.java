@@ -5,11 +5,11 @@
  */
 package wheelswithinwheels;
 
-import commandui.FeildwiseEditingField;
-import commandui.FieldwiseEditable;
-import commandui.FieldwiseEditingUI;
-import commandui.TableView;
-import commandui.TableViewWidthOverflowException;
+import commandui.fieldwiseediting.FeildwiseEditingField;
+import commandui.fieldwiseediting.FieldwiseEditable;
+import commandui.fieldwiseediting.FieldwiseEditingUI;
+import commandui.tableview.TableView;
+import commandui.tableview.TableViewWidthOverflowException;
 
 /**
  *
@@ -22,7 +22,7 @@ public class WheelsWithinWheels {
     
     public static void sampleEditing(){
         FWETestModel obj = new FWETestModel();
-        commandui.FieldwiseEditingUI<FWETestModel> ui;
+        commandui.fieldwiseediting.FieldwiseEditingUI<FWETestModel> ui;
         ui = new FieldwiseEditingUI<>(obj);
         ui.addQuitCommand("quit");
         ui.run();
