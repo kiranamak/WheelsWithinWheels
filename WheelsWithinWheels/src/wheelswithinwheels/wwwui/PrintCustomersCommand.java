@@ -35,7 +35,7 @@ public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnvironment>{
 
     @Override
     public void run() throws CommandUIArgumentException {
-        Customer[] customers = new [Customer]();
+        Customer[] customers = new Customer[environment.getNumberCustomers()];
         switch (sort){
             case NAME:
                 customers = environment.getCustomersByName();

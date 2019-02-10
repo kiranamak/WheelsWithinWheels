@@ -43,6 +43,8 @@ public class WWWEnvironment {
         return customers.toArray(customersByNumberArray);
     }
     
+    public int getNumberCustomers() { return customers.size(); }
+    
     public Payment[] getPayments() { 
         Payment[] paymentsArray = new Payment[payments.size()];
         return payments.toArray(paymentsArray);
