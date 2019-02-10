@@ -18,7 +18,7 @@ public class Payment implements Transaction {
     int amount;
     LocalDate date;
 
-    Payment(Customer customer, int amount, LocalDate date) {
+    public Payment(Customer customer, LocalDate date, int amount) {
         this.customer = customer;
         this.amount = amount;
         this.date = date;

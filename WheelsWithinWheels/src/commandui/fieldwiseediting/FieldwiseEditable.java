@@ -10,5 +10,6 @@ package commandui.fieldwiseediting;
  * @author asa
  */
 public interface FieldwiseEditable {
+
     public FeildwiseEditingField[] getFields();
 }

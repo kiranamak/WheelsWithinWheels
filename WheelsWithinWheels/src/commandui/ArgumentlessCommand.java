@@ -5,7 +5,6 @@
  */
 package commandui;
 
-
 public abstract class ArgumentlessCommand<Enviroment> extends Command<Enviroment> {
 
     public ArgumentlessCommand(Enviroment enviroment) {
@@ -13,18 +12,19 @@ public abstract class ArgumentlessCommand<Enviroment> extends Command<Enviroment
     }
 
     public abstract String getName();
-    
-    public boolean shouldFailSilently(){
+
+    public boolean shouldFailSilently() {
         return false;
     }
-    
+
     @Override
-    public void run(String args)throws CommandUIArgumentException{
-        if(!shouldFailSilently() && !args.equals(""))
+    public void run(String args) throws CommandUIArgumentException {
+        if (!shouldFailSilently() && !args.equals("")) {
             throw new CommandUIArgumentException("Expected no arguments.");
+        }
         run();
     }
-    
+
     public abstract void run() throws CommandUIArgumentException;
-    
+
 }

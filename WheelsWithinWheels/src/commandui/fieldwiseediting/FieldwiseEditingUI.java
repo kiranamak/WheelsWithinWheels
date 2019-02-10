@@ -10,46 +10,45 @@ import commandui.CommandUI;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 
-
 /**
  *
  * @author asa
  */
-public class FieldwiseEditingUI<Edited extends FieldwiseEditable> extends CommandUI{
+public class FieldwiseEditingUI<Edited extends FieldwiseEditable> extends CommandUI {
+
     Edited object;
-    
-    public FieldwiseEditingUI(Edited object){
-        super(new Command[] {});
+
+    public FieldwiseEditingUI(Edited object) {
+        super(new Command[]{});
         this.object = object;
     }
-    
+
     @Override
-    public void setup(){
+    public void setup() {
         super.setup();
         FieldwiseEditingEnviroment<Edited> enviroment = new FieldwiseEditingEnviroment<>(object);
-        for (FeildwiseEditingField field:object.getFields()){
-            addCommand(new FieldwiseEditCommand(enviroment,field));
+        for (FeildwiseEditingField field : object.getFields()) {
+            addCommand(new FieldwiseEditCommand(enviroment, field));
         }
-        
+
         setPrompt(editVeiw());
     }
-    
-    protected String editVeiw(){
+
+    protected String editVeiw() {
         TableView tv = new TableView(2);
-        for (FeildwiseEditingField field:object.getFields()){
-            try{
-                tv.addRow(new String[] {field.name,field.value});
-            }catch(TableViewWidthOverflowException e){
+        for (FeildwiseEditingField field : object.getFields()) {
+            try {
+                tv.addRow(new String[]{field.name, field.value});
+            } catch (TableViewWidthOverflowException e) {
                 throw new IllegalStateException();
             }
         }
-        return tv.toString()+">";
+        return tv.toString() + ">";
     }
-    
+
     @Override
-    protected void postCommand(){
+    protected void postCommand() {
         setPrompt(editVeiw());
     }
-    
-    
+
 }

@@ -13,9 +13,10 @@ import commandui.CommandUIArgumentException;
  * @author asa
  */
 public class FieldwiseEditCommand extends Command<FieldwiseEditingEnviroment> {
+
     FeildwiseEditingField field;
 
-    public FieldwiseEditCommand(FieldwiseEditingEnviroment enviroment,FeildwiseEditingField field) {
+    public FieldwiseEditCommand(FieldwiseEditingEnviroment enviroment, FeildwiseEditingField field) {
         super(enviroment);
         this.field = field;
     }
@@ -29,5 +30,5 @@ public class FieldwiseEditCommand extends Command<FieldwiseEditingEnviroment> {
     public void run(String args) throws CommandUIArgumentException {
         field.setter.apply(args);
     }
-    
+
 }

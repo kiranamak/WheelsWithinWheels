@@ -5,6 +5,8 @@
  */
 package wheelswithinwheels;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author asa
@@ -18,25 +20,30 @@ public class Customer {
     private static int lastCustomerNumber = 0;
     
     
-    Customer(String firstName, String lastName) {
+    public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.customerNumber = ++Customer.lastCustomerNumber;
     }
 
-    String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    int getCustomerNumber() {
+    public int getCustomerNumber() {
         return customerNumber;
     }
     
     static void resetCustomerNumbers(){
         lastCustomerNumber = 0;
     }
+
+    public void complete(LocalDate date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

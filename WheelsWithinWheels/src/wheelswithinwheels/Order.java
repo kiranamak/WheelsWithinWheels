@@ -19,6 +19,7 @@ public class Order implements Transaction {
     private final TuneupLevel level;
     private final String comment;
     private final LocalDate orderDate;
+    private final LocalDate completeDate = null;
     private OrderStatus status;
     private final int orderNumber;
 

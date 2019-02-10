@@ -22,7 +22,7 @@ public class RepairPriceTable {
         
     }
 
-    RepairPrice getPrice(String brand, TuneupLevel level) {
+    public RepairPrice getPrice(String brand, TuneupLevel level) {
         return table.get(brand).get(level);
     }
 
@@ -30,5 +30,13 @@ public class RepairPriceTable {
         if (table.get(price.brand) == null)
             table.put(price.brand,new HashMap());
         table.get(price.brand).put(price.level,price);
+    }
+    
+    public String[] getBrands(){
+        throw new UnsupportedOperationException();
+    }
+    
+    public TuneupLevel[] getLevels(){
+        throw new UnsupportedOperationException();
     }
 }

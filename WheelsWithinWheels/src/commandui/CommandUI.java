@@ -14,84 +14,88 @@ import java.util.Scanner;
  * @author asa
  */
 public class CommandUI {
+
     private final Scanner scanner;
     private String welcomeMessage = "";
     private String prompt = ">";
-    HashMap<String,Command> commandMap;
+    private HashMap<String, Command<?>> commandMap;
     private boolean running = false;
-    
-    public CommandUI(Command[] commands){
+
+    public CommandUI(){
         this.scanner = new Scanner(System.in);
+        
+    }
+    
+    public CommandUI(Command[] commands) {
+        this();
         updateCommands(commands);
     }
-    
-    public void updateCommands(Command[] commands){
+
+    public final void updateCommands(Command[] commands) {
         commandMap = new HashMap();
-        for (Command command : commands){
-            commandMap.put(command.getName(),command);
+        for (Command command : commands) {
+            commandMap.put(command.getName(), command);
         }
     }
-    
-    public void addCommand(Command command){
-        commandMap.put(command.getName(),command);
+
+    public final void addCommand(Command command) {
+        commandMap.put(command.getName(), command);
     }
-    
-    public void addQuitCommand(String name){
-        addCommand(new QuitCommand(this,name));
+
+    public final void addQuitCommand(String name) {
+        addCommand(new QuitCommand(this, name));
     }
-    
-    public void setWelcomeMessage(String msg){
+
+    public final void setWelcomeMessage(String msg) {
         welcomeMessage = msg;
     }
-    
-    public void setPrompt(String prompt){
+
+    public final void setPrompt(String prompt) {
         this.prompt = prompt;
     }
-    
-    public void run(){
+
+    public void run() {
         this.running = true;
         setup();
         System.out.println(welcomeMessage);
-        while (running){
+        while (running) {
             runPrompt();
         }
     }
-    
-    protected void setup(){}
-    
-    private void runPrompt(){
+
+    protected void setup() {
+    }
+
+    private final void runPrompt() {
         System.out.print(prompt);
         String commandName = scanner.next();
         String argString = scanner.nextLine();
         Command command = commandMap.get(commandName);
-        if (command==null) {
+        if (command == null) {
             reportUnknownCommand();
             postCommand();
             return;
         }
         try {
-            if (argString.length() > 0)
+            if (argString.length() > 0) {
                 argString = argString.substring(1);//drop leading space
+            }
             command.run(argString);
-        }
-        catch (CommandUIArgumentException e){
+        } catch (CommandUIArgumentException e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             postCommand();
         }
     }
-    
-    
-   
-    
-    private void reportUnknownCommand(){
+
+    private void reportUnknownCommand() {
         System.out.println("Unknown Command");
     }
-    
-    public void stop(){
+
+    public final void stop() {
         running = false;
     }
-    
-    protected void postCommand(){}
+
+    protected void postCommand() {
+    }
 }

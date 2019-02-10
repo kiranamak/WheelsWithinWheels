@@ -5,20 +5,19 @@
  */
 package commandui;
 
+public abstract class KnownLengthArgumentListCommand<Enviroment>
+        extends ArgumentedCommand<Enviroment> {
 
-public abstract class KnownLengthArgumentListCommand<Enviroment> 
-        extends SeparatedArgumentCommand<Enviroment> {
-    
-    
     public abstract int argumentCount();
-    
+
     public KnownLengthArgumentListCommand(Enviroment enviroment) {
         super(enviroment);
     }
 
-    @Override 
+    @Override
     public void run(String[] args) throws CommandUIArgumentException {
-        if (args.length != argumentCount())
-            throw new CommandUIArgumentException(argumentCount(),args.length);
+        if (args.length != argumentCount()) {
+            throw new CommandUIArgumentException(argumentCount(), args.length);
+        }
     }
 }

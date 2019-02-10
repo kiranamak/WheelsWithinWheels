@@ -16,7 +16,7 @@ public class RepairPrice {
     int price;
     int repairLength;
 
-    RepairPrice(String brand, TuneupLevel level, int price, int repairLength) {
+    public RepairPrice(String brand, TuneupLevel level, int price, int repairLength) {
         this.brand = brand;
         this.level = level;
         this.price = price;
@@ -31,7 +31,7 @@ public class RepairPrice {
         return level;
     }
 
-    int getPrice() {
+    public int getPrice() {
         return price;
     }
 

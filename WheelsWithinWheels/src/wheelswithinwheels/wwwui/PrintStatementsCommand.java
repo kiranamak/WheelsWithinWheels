@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package commandui.tableview;
+package wheelswithinwheels.wwwui;
 
 /**
  *
  * @author asa
  */
-public class TableViewWidthOverflowException extends Exception {
-
-    public TableViewWidthOverflowException() {
-        super("Tried to add row to table, but row was too large.");
-    }
-
+public class PrintStatementsCommand {
+    
 }

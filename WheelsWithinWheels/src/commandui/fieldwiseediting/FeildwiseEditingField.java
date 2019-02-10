@@ -12,12 +12,13 @@ import java.util.function.Function;
  * @author asa
  */
 public class FeildwiseEditingField {
+
     String name;
     String command;
     String value;
-    Function<String,Void> setter;
-    
-    public FeildwiseEditingField(String name,String command,String value,Function<String,Void> setter){
+    Function<String, Void> setter;
+
+    public FeildwiseEditingField(String name, String command, String value, Function<String, Void> setter) {
         this.name = name;
         this.command = command;
         this.value = value;

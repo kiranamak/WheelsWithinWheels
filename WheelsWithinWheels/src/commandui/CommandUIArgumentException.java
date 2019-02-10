@@ -27,13 +27,13 @@ public class CommandUIArgumentException extends Exception {
     public CommandUIArgumentException(String msg) {
         super(msg);
     }
-    
-    public CommandUIArgumentException(int arg,String received,String expected){
-        super("Expected "+expected+", but got \""+"\" instead. (Argument "+arg+")");
+
+    public CommandUIArgumentException(int arg, String received, String expected) {
+        super("Expected " + expected + ", but got \"" + "\" instead. (Argument " + arg + ")");
     }
-    
-    public CommandUIArgumentException(int expected, int recieved){
-        super("Expected "+expected+" arguments, revieved "+recieved+" instead.");
-                
+
+    public CommandUIArgumentException(int expected, int recieved) {
+        super("Expected " + expected + " arguments, revieved " + recieved + " instead.");
+
     }
 }

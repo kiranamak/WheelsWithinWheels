@@ -6,6 +6,7 @@
 package commandui.tableview;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -13,44 +14,60 @@ import java.util.stream.Stream;
  * @author asa
  */
 public class TableView {
+
     ArrayList<ArrayList<String>> columns;
     int width;
     String columnDelimiter = " ";
-    
+
     public static int startingDepth = 4;
-    
-    
-    public TableView(int width){
+
+    public TableView(int width) {
         columns = new ArrayList<ArrayList<String>>(width);
         this.width = width;
-        for (int i = 0; i < width; i++){
+        for (int i = 0; i < width; i++) {
             columns.add(new ArrayList<String>());
         }
     }
-    
-    public void addRow(String[] row) throws TableViewWidthOverflowException{
-        if (row.length > width){
+
+    public void addRow(String[] row) throws TableViewWidthOverflowException {
+        if (row.length > width) {
             throw new TableViewWidthOverflowException();
         }
-        for (int i = 0;i<row.length;i++){
+        for (int i = 0; i < row.length; i++) {
             columns.get(i).add(row[i]);
         }
     }
     
+    public void addRow(Object[] row) throws TableViewWidthOverflowException{
+        addRow(Arrays.stream(row).map(Object::toString).toArray());
+    }
+    
+    
+    public void addColumns(int cols) {
+        for (int i = 0; i < cols; i++) {
+            ArrayList<String> col = new ArrayList<String>();
+            for (int j = 0; j < maxHeight(); j++) {
+                col.add("");
+            }
+            columns.add(col);
+        }
+        width += cols;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         int[] widths = widths();
         StringBuffer result = new StringBuffer();
-        for (int i = 0; i < maxHeight(); i++){
-            for (int j = 0;j<columns.size();j++){
+        for (int i = 0; i < maxHeight(); i++) {
+            for (int j = 0; j < columns.size(); j++) {
                 ArrayList<String> column = columns.get(j);
                 String cell;
                 try {
                     cell = column.get(i);
-                } catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
                     cell = "";
                 }
-                result.append(paddedCell(cell,widths[j]));
+                result.append(paddedCell(cell, widths[j]));
                 result.append(columnDelimiter);
             }
             result.append("\n");
@@ -60,19 +77,20 @@ public class TableView {
 
     private int[] widths() {
         int[] widths = new int[width];
-        for (int i = 0; i < widths.length;i++){
+        for (int i = 0; i < widths.length; i++) {
             widths[i] = columns.get(i).stream()
                     .mapToInt(String::length)
                     .max()
                     .orElse(0);
         }
-        return widths;        
+        return widths;
     }
-    
-    private String paddedCell(String cell,int width){
+
+    private String paddedCell(String cell, int width) {
         StringBuffer result = new StringBuffer(cell);
-        while (result.length() < width)
+        while (result.length() < width) {
             result.append(" ");
+        }
         return result.toString();
     }
 
@@ -82,16 +100,6 @@ public class TableView {
                 .max()
                 .orElse(0);
     }
-    
-    public void addColumns(int cols){
-        for (int i = 0; i< cols; i++){
-            ArrayList<String> col = new ArrayList<String>();
-            for (int j = 0; j< maxHeight(); j++){
-                col.add("");
-            }
-            columns.add(col);
-        }
-        width+=cols;
-    }
+
 
 }
