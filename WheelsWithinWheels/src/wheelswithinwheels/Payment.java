@@ -38,6 +38,7 @@ public class Payment implements Transaction {
 
     @Override
     public String getReport() {
+        //TODO: Should use StringBuilder.
         String report = "";
         report += date + "\t";
         report += "$" + String.valueOf(amount);
