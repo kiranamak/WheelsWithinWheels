@@ -27,7 +27,7 @@ public class WWWEnviroment {
     public ArrayList<Customer> getCustomersByNumber() { return customersByNumber; }
     public ArrayList<Payment> getPayments() { return payments; }
     public ArrayList<Transaction> getTransactions() { return transactions; }
-    public RepairPriceTable getRepairPriceTable() { return repairPriceTable; }
+    public RepairPriceTable getPricesTable() { return repairPriceTable; }
   
     public void reset() {
         orders = new ArrayList<>(orders.size());
@@ -43,6 +43,15 @@ public class WWWEnviroment {
     public void addOrder(Order order) {
         orders.add(order);
         transactions.add(order);
+    }
+    
+    public void addPayment(Payment payment) {
+        payments.add(payment);
+        transactions.add(payment);
+    }
+    
+    public void addRepairPrice(RepairPrice price) {
+        repairPriceTable.addPrice(price);
     }
     
     public void addCustomer(Customer customer) {
@@ -62,7 +71,11 @@ public class WWWEnviroment {
     }
     
     public Customer getCustomer(int customerNumber) {
-        return customersByNumber.get(customerNumber);
+        return customersByNumber.get(customerNumber - 1);
+    }
+    
+    public Order getOrder(int orderNumber) {
+        return orders.get(orderNumber - 1);
     }
     
     public String getStatementReport() {
