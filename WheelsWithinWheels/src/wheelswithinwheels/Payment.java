@@ -5,27 +5,39 @@
  */
 package wheelswithinwheels;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 /**
  *
  * @author asa
  */
-public class Payment implements Transaction{
-    int customerNumber;
+public class Payment implements Transaction {
+
+    Customer customer;
     int amount;
-    Date date;
-    Payment(int customerNumber, int amount, Date date){
-        this.customerNumber = customerNumber;
+    LocalDate date;
+
+    Payment(Customer customer, int amount, LocalDate date) {
+        this.customer = customer;
         this.amount = amount;
         this.date = date;
     }
-    int getCustomerNumber(){return customerNumber;}
-    int getAmount(){return amount;}
-    Date getDate(){return date;}
-    
+
+    int getCustomerNumber() {
+        return customer.getCustomerNumber();
+    }
+
+    int getAmount() {
+        return amount;
+    }
+
+    LocalDate getDate() {
+        return date;
+    }
+
     @Override
-    public String getReport(){
+    public String getReport() {
         throw new UnsupportedOperationException();
     }
 }

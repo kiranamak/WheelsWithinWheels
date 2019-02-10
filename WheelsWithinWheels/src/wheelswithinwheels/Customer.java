@@ -10,14 +10,33 @@ package wheelswithinwheels;
  * @author asa
  */
 public class Customer {
-    String firstName;
-    String lastName;
-    int customerNumber;
-    Customer(String firstName, String lastName){
+
+    private final String firstName;
+    private final String lastName;
+    private final int customerNumber;
+
+    private static int lastCustomerNumber = 0;
+    
+    
+    Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.customerNumber = ++Customer.lastCustomerNumber;
     }
-    String getFirstName(){return firstName;}
-    String getLastName(){return lastName;}
-    int getCustomerNumber(){return customerNumber;}
+
+    String getFirstName() {
+        return firstName;
+    }
+
+    String getLastName() {
+        return lastName;
+    }
+
+    int getCustomerNumber() {
+        return customerNumber;
+    }
+    
+    static void resetCustomerNumbers(){
+        lastCustomerNumber = 0;
+    }
 }

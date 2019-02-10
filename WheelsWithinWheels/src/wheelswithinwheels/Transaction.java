@@ -10,5 +10,6 @@ package wheelswithinwheels;
  * @author asa
  */
 public interface Transaction {
+
     String getReport();
 }

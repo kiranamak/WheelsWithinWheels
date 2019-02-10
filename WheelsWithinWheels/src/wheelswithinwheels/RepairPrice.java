@@ -10,18 +10,32 @@ package wheelswithinwheels;
  * @author asa
  */
 public class RepairPrice {
+
     String brand;
     TuneupLevel level;
     int price;
-    int daysToRepair;
-    RepairPrice(String brand, TuneupLevel level, int price, int daysToRepair){
+    int repairLength;
+
+    RepairPrice(String brand, TuneupLevel level, int price, int repairLength) {
         this.brand = brand;
         this.level = level;
         this.price = price;
-        this.daysToRepair = daysToRepair;
+        this.repairLength = repairLength;
     }
-    String getBrand(){return brand;}
-    TuneupLevel getLevel(){return level;}
-    int getPrice(){return price;}
-    int daysToRepair(){return daysToRepair;}
+
+    String getBrand() {
+        return brand;
+    }
+
+    TuneupLevel getLevel() {
+        return level;
+    }
+
+    int getPrice() {
+        return price;
+    }
+
+    int getRepairLength() {
+        return repairLength;
+    }
 }

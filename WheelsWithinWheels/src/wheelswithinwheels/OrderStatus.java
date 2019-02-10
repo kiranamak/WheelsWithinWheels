@@ -9,6 +9,6 @@ package wheelswithinwheels;
  *
  * @author asa
  */
-public enum TuneupLevel {
-    SILVER, GOLD, PLATINUM;
+public enum OrderStatus {
+    PENDING,COMPLETED,RETURNED;
 }
