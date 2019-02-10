@@ -10,5 +10,11 @@ package wheelswithinwheels;
  * @author asa
  */
 public enum TuneupLevel {
-    SILVER, GOLD, PLATINUM;
+    SILVER("Silver"), GOLD("Gold"), PLATINUM("Platinum");
+    
+    private String value;
+    private TuneupLevel(String value) {
+        this.value = value;
+    }
+    public String value() { return value; }
 }

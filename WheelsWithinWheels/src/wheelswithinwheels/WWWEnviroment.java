@@ -6,58 +6,71 @@
 package wheelswithinwheels;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
  * @author asa
  */
 public class WWWEnviroment {
-
+    
     public DateTimeFormatter dateFormatter;
-    public Order[] getOrders(){
-        throw new UnsupportedOperationException();
+    private ArrayList<Order> orders = new ArrayList<>(100);
+    private ArrayList<Customer> customersByName = new ArrayList<>(100);
+    private ArrayList<Customer> customersByNumber = new ArrayList<>(100);
+    private ArrayList<Payment> payments = new ArrayList<>(100);
+    private ArrayList<Transaction> transactions = new ArrayList<>(100);
+    private RepairPriceTable repairPriceTable;
+    
+    public ArrayList<Order> getOrders() { return orders; }
+    public ArrayList<Customer> getCustomersByName() { return customersByName; }
+    public ArrayList<Customer> getCustomersByNumber() { return customersByNumber; }
+    public ArrayList<Payment> getPayments() { return payments; }
+    public ArrayList<Transaction> getTransactions() { return transactions; }
+    public RepairPriceTable getRepairPriceTable() { return repairPriceTable; }
+  
+    public void reset() {
+        orders = new ArrayList<>(orders.size());
+        customersByName = new ArrayList<>(customersByName.size());
+        customersByNumber = new ArrayList<>(customersByNumber.size());
+        payments = new ArrayList<>(payments.size());
+        transactions = new ArrayList<>(transactions.size());
     }
-
-    public Customer[] getCustomers(){
+    public void persistTo(String filename) throws Exception{
         throw new UnsupportedOperationException();
     }
     
-    public Payment[] getPayments(){
-        throw new UnsupportedOperationException();
+    public void addOrder(Order order) {
+        orders.add(order);
+        transactions.add(order);
     }
     
-    public Transaction[] getTransactions(){
-        throw new UnsupportedOperationException();
+    public void addCustomer(Customer customer) {
+        addCustomerByName(customer);
+        customersByNumber.add(customersByNumber.size(), customer);
     }
     
-    public String getStatementReport(){
+    private void addCustomerByName(Customer customer) {
+        for (int i = 0; i < customersByName.size(); i++) {
+            Customer c = customersByName.get(i);
+            int compare = customer.getFullName().compareToIgnoreCase(c.getFullName());
+            if (compare <= 0) { 
+                customersByName.add(i, customer); 
+                return;
+            }
+        }
+    }
+    
+    public Customer getCustomer(int customerNumber) {
+        return customersByNumber.get(customerNumber);
+    }
+    
+    public String getStatementReport() {
         throw new UnsupportedOperationException();
     }
     
     public String getAccountsReceiveableReport(){
         throw new UnsupportedOperationException();
     }
-    
-    public void reset(){
-        throw new UnsupportedOperationException();
-    }
-
-    public void persistTo(String filename) throws Exception{
-        throw new UnsupportedOperationException();
-    }
-    
-    //New
-    public void addCustomer(Customer customer){
-        throw new UnsupportedOperationException();
-    }
-
-    public Customer getCustomer(int customerNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public RepairPriceTable getPricesTable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
+ 
 }

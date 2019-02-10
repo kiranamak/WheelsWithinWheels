@@ -62,7 +62,16 @@ public class Order implements Transaction {
 
     @Override
     public String getReport() {
-        throw new UnsupportedOperationException();
+        String report = "";
+        report += orderDate + "\t";
+        report += "#" + String.valueOf(orderNumber);
+        report += status.value();
+        report += customer.shortReport();
+        report += brand;
+        report += level.value() + "; ";
+        report += "due:" + getPromisedDate();
+        if (!comment.equals("")) { report += " comment: " + comment; }
+        return report;
     }
     
     Customer getCustomer(){

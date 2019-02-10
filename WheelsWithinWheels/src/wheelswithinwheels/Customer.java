@@ -33,6 +33,10 @@ public class Customer {
     public String getLastName() {
         return lastName;
     }
+    
+    public String getFullName() {
+        return firstName + lastName;
+    }
 
     public int getCustomerNumber() {
         return customerNumber;
@@ -45,5 +49,11 @@ public class Customer {
     public void complete(LocalDate date) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    public String shortReport() {
+        String report = "";
+        report += firstName + " " + lastName;
+        report += "(" + customerNumber + ")";
+        return report;
+    }
 }

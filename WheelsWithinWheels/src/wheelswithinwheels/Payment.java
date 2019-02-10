@@ -38,6 +38,10 @@ public class Payment implements Transaction {
 
     @Override
     public String getReport() {
-        throw new UnsupportedOperationException();
+        String report = "";
+        report += date + "\t";
+        report += "$" + String.valueOf(amount);
+        report += customer.shortReport();
+        return report;
     }
 }

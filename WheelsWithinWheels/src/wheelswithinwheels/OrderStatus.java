@@ -10,5 +10,10 @@ package wheelswithinwheels;
  * @author asa
  */
 public enum OrderStatus {
-    PENDING,COMPLETED,RETURNED;
+    PENDING("PENDING"),COMPLETED("COMPLETED"),RETURNED("RETURNED");
+    private String value;
+    private OrderStatus(String value) {
+        this.value = value;
+    }
+    public String value() { return value; }
 }
