@@ -9,11 +9,11 @@ package commandui.fieldwiseediting;
  *
  * @author asa
  */
-class FieldwiseEditingEnviroment<Edited> {
+class FieldwiseEditingEnvironment<Edited> {
 
     Edited object;
 
-    FieldwiseEditingEnviroment(Edited obejct) {
+    FieldwiseEditingEnvironment(Edited obejct) {
         this.object = object;
     }
 }

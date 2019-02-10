@@ -9,12 +9,12 @@ package commandui;
  *
  * @author asa
  */
-public abstract class Command<Enviroment> {
+public abstract class Command<Environment> {
 
-    protected Enviroment enviroment;
+    protected Environment environment;
 
-    public Command(Enviroment enviroment) {
-        this.enviroment = enviroment;
+    public Command(Environment environment) {
+        this.environment = environment;
     }
 
     public abstract String getName();

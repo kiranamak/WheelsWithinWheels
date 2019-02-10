@@ -8,10 +8,10 @@ package commandui;
 import java.util.Arrays;
 
 
-public abstract class SeparatedArgumentCommand<Enviroment> extends Command<Enviroment> {
+public abstract class SeparatedArgumentCommand<Environment> extends Command<Environment> {
 
-    public SeparatedArgumentCommand(Enviroment enviroment) {
-        super(enviroment);
+    public SeparatedArgumentCommand(Environment environment) {
+        super(environment);
     }
 
     public abstract String getName();

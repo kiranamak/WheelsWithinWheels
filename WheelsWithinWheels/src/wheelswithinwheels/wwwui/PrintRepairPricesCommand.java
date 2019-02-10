@@ -14,16 +14,16 @@ import java.util.stream.Stream;
 import wheelswithinwheels.RepairPrice;
 import wheelswithinwheels.RepairPriceTable;
 import wheelswithinwheels.TuneupLevel;
-import wheelswithinwheels.WWWEnviroment;
+import wheelswithinwheels.WWWEnvironment;
 
 /**
  *
  * @author asa
  */
-public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnviroment>{
+public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment>{
 
-    public PrintRepairPricesCommand(WWWEnviroment enviroment) {
-        super(enviroment);
+    public PrintRepairPricesCommand(WWWEnvironment environment) {
+        super(environment);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnviroment>
 
     @Override
     public void run() throws CommandUIArgumentException {
-        RepairPriceTable pricesTable = enviroment.getPricesTable();
+        RepairPriceTable pricesTable = environment.getPricesTable();
         String[] brands = pricesTable.getBrands();
         TuneupLevel[] levels = pricesTable.getLevels();
         TableView table = new TableView(levels.length);

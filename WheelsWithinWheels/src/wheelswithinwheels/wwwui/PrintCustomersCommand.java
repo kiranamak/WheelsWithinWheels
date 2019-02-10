@@ -7,22 +7,20 @@ package wheelswithinwheels.wwwui;
 
 import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
-import java.util.Arrays;
-import java.util.Comparator;
 import wheelswithinwheels.Customer;
-import wheelswithinwheels.WWWEnviroment;
+import wheelswithinwheels.WWWEnvironment;
 
 /**
  *
  * @author asa
  */
-public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnviroment>{
+public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnvironment>{
     private final CustomerSort sort;
     
     public enum CustomerSort {NAME,NUMBER;}
     
-    public PrintCustomersCommand(WWWEnviroment enviroment,CustomerSort sort) {
-        super(enviroment);
+    public PrintCustomersCommand(WWWEnvironment environment,CustomerSort sort) {
+        super(environment);
         this.sort = sort;
     }
 
@@ -37,18 +35,13 @@ public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnviroment>{
 
     @Override
     public void run() throws CommandUIArgumentException {
-        Customer[] customers = enviroment.getCustomers();
-        Comparator<Customer> comparator = null;
+        Customer[] customers = new [Customer]();
         switch (sort){
             case NAME:
-                comparator = (Customer a,Customer b)->
-                        (a.getLastName()+a.getFirstName())
-                                .compareTo(b.getLastName()+b.getFirstName());
+                customers = environment.getCustomersByName();
             case NUMBER:
-                comparator = (Customer a,Customer b)->
-                        (a.getCustomerNumber()-b.getCustomerNumber());         
+                customers = environment.getCustomersByNumber();         
         }
-        Arrays.sort(customers,comparator);
         for (Customer customer:customers){
             System.out.println(customer);
         }

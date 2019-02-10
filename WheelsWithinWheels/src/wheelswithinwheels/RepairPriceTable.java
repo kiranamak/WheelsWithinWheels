@@ -16,7 +16,7 @@ public class RepairPriceTable {
 
     public static RepairPriceTable shared = new RepairPriceTable();
     
-    Map<String,Map<TuneupLevel,RepairPrice>> table = new HashMap();
+    Map<String, Map<TuneupLevel, RepairPrice>> table = new HashMap();
     
     private RepairPriceTable(){
         

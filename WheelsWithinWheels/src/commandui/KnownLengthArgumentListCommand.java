@@ -5,13 +5,13 @@
  */
 package commandui;
 
-public abstract class KnownLengthArgumentListCommand<Enviroment>
-        extends ArgumentedCommand<Enviroment> {
+public abstract class KnownLengthArgumentListCommand<Environment>
+        extends ArgumentedCommand<Environment> {
 
     public abstract int argumentCount();
 
-    public KnownLengthArgumentListCommand(Enviroment enviroment) {
-        super(enviroment);
+    public KnownLengthArgumentListCommand(Environment environment) {
+        super(environment);
     }
 
     @Override

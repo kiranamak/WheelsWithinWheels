@@ -10,16 +10,16 @@ import commandui.KnownLengthArgumentListCommand;
 import java.time.LocalDate;
 import wheelswithinwheels.Customer;
 import wheelswithinwheels.Payment;
-import wheelswithinwheels.WWWEnviroment;
+import wheelswithinwheels.WWWEnvironment;
 
 /**
  *
  * @author asa
  */
-public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnviroment>{
+public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnvironment>{
 
-    public AddPaymentCommand(WWWEnviroment enviroment) {
-        super(enviroment);
+    public AddPaymentCommand(WWWEnvironment environment) {
+        super(environment);
     }
 
     @Override
@@ -36,10 +36,10 @@ public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnvirom
     public void run(String[] args)throws CommandUIArgumentException{
         super.run(args);
         int customerNumber = parseIntArgument(0,args);
-        Customer customer = enviroment.getCustomer(customerNumber);
-        LocalDate date = LocalDate.parse(args[1],enviroment.dateFormatter);
+        Customer customer = environment.getCustomer(customerNumber);
+        LocalDate date = LocalDate.parse(args[1],environment.dateFormatter);
         int amount = parseIntArgument(2,args);
-        enviroment.addPayment(new Payment(customer,date,amount));
+        environment.addPayment(new Payment(customer,date,amount));
     }
     
 }

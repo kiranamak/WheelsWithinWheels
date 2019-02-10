@@ -25,7 +25,7 @@ public class QuitCommand extends ArgumentlessCommand<CommandUI> {
 
     @Override
     public void run() throws CommandUIArgumentException {
-        enviroment.stop();
+        environment.stop();
     }
 
 }

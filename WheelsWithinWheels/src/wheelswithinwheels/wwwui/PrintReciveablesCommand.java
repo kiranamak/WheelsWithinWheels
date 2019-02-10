@@ -7,16 +7,16 @@ package wheelswithinwheels.wwwui;
 
 import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
-import wheelswithinwheels.WWWEnviroment;
+import wheelswithinwheels.WWWEnvironment;
 
 /**
  *
  * @author asa
  */
-public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnviroment> {
+public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment> {
 
-    public PrintReciveablesCommand(WWWEnviroment enviroment) {
-        super(enviroment);
+    public PrintReciveablesCommand(WWWEnvironment environment) {
+        super(environment);
     }
 
     @Override

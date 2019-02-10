@@ -12,12 +12,12 @@ import commandui.CommandUIArgumentException;
  *
  * @author asa
  */
-public class FieldwiseEditCommand extends Command<FieldwiseEditingEnviroment> {
+public class FieldwiseEditCommand extends Command<FieldwiseEditingEnvironment> {
 
     FeildwiseEditingField field;
 
-    public FieldwiseEditCommand(FieldwiseEditingEnviroment enviroment, FeildwiseEditingField field) {
-        super(enviroment);
+    public FieldwiseEditCommand(FieldwiseEditingEnvironment environment, FeildwiseEditingField field) {
+        super(environment);
         this.field = field;
     }
 

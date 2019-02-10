@@ -26,9 +26,9 @@ public class FieldwiseEditingUI<Edited extends FieldwiseEditable> extends Comman
     @Override
     public void setup() {
         super.setup();
-        FieldwiseEditingEnviroment<Edited> enviroment = new FieldwiseEditingEnviroment<>(object);
+        FieldwiseEditingEnvironment<Edited> environment = new FieldwiseEditingEnvironment<>(object);
         for (FeildwiseEditingField field : object.getFields()) {
-            addCommand(new FieldwiseEditCommand(enviroment, field));
+            addCommand(new FieldwiseEditCommand(environment, field));
         }
 
         setPrompt(editVeiw());

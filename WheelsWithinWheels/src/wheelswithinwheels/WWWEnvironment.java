@@ -7,32 +7,57 @@ package wheelswithinwheels;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  *
  * @author asa
  */
-public class WWWEnviroment {
+public class WWWEnvironment {
     
     public DateTimeFormatter dateFormatter;
     private ArrayList<Order> orders = new ArrayList<>(100);
-    private ArrayList<Customer> customersByName = new ArrayList<>(100);
-    private ArrayList<Customer> customersByNumber = new ArrayList<>(100);
+    private ArrayList<Customer> customers = new ArrayList<>(100);
     private ArrayList<Payment> payments = new ArrayList<>(100);
     private ArrayList<Transaction> transactions = new ArrayList<>(100);
     private RepairPriceTable repairPriceTable;
     
-    public ArrayList<Order> getOrders() { return orders; }
-    public ArrayList<Customer> getCustomersByName() { return customersByName; }
-    public ArrayList<Customer> getCustomersByNumber() { return customersByNumber; }
-    public ArrayList<Payment> getPayments() { return payments; }
-    public ArrayList<Transaction> getTransactions() { return transactions; }
+    public Order[] getOrders() { 
+        Order[] ordersArray = new Order[orders.size()];
+        return orders.toArray(ordersArray);
+    }
+    
+    public Customer[] getCustomersByName() { 
+        Customer[] customersByNameArray = new Customer[customers.size()];
+        customersByNameArray = customers.toArray(customersByNameArray);
+        Comparator<Customer> comparator = null;
+        comparator = (Customer a, Customer b)->
+                        (a.getFullName()).compareTo(b.getFullName());
+        Arrays.sort(customersByNameArray, comparator);
+        return customersByNameArray;
+    }
+    
+    public Customer[] getCustomersByNumber() {
+        Customer[] customersByNumberArray = new Customer[customers.size()];
+        return customers.toArray(customersByNumberArray);
+    }
+    
+    public Payment[] getPayments() { 
+        Payment[] paymentsArray = new Payment[payments.size()];
+        return payments.toArray(paymentsArray);
+    }
+    
+    public Transaction[] getTransactions() { 
+        Transaction[] transactionsArray = new Payment[transactions.size()];
+        return payments.toArray(transactionsArray);
+    }
+    
     public RepairPriceTable getPricesTable() { return repairPriceTable; }
   
     public void reset() {
         orders = new ArrayList<>(orders.size());
-        customersByName = new ArrayList<>(customersByName.size());
-        customersByNumber = new ArrayList<>(customersByNumber.size());
+        customers = new ArrayList<>(customers.size());
         payments = new ArrayList<>(payments.size());
         transactions = new ArrayList<>(transactions.size());
     }
@@ -55,23 +80,11 @@ public class WWWEnviroment {
     }
     
     public void addCustomer(Customer customer) {
-        addCustomerByName(customer);
-        customersByNumber.add(customersByNumber.size(), customer);
+        customers.add(customers.size(), customer);
     }
-    
-    private void addCustomerByName(Customer customer) {
-        for (int i = 0; i < customersByName.size(); i++) {
-            Customer c = customersByName.get(i);
-            int compare = customer.getFullName().compareToIgnoreCase(c.getFullName());
-            if (compare <= 0) { 
-                customersByName.add(i, customer); 
-                return;
-            }
-        }
-    }
-    
+
     public Customer getCustomer(int customerNumber) {
-        return customersByNumber.get(customerNumber - 1);
+        return customers.get(customerNumber - 1);
     }
     
     public Order getOrder(int orderNumber) {
@@ -84,6 +97,5 @@ public class WWWEnviroment {
     
     public String getAccountsReceiveableReport(){
         throw new UnsupportedOperationException();
-    }
- 
+    } 
 }

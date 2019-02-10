@@ -12,16 +12,16 @@ import wheelswithinwheels.Customer;
 import wheelswithinwheels.Payment;
 import wheelswithinwheels.RepairPrice;
 import wheelswithinwheels.TuneupLevel;
-import wheelswithinwheels.WWWEnviroment;
+import wheelswithinwheels.WWWEnvironment;
 
 /**
  *
  * @author asa
  */
-public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnviroment>{
+public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnvironment>{
     
-    public AddRepairPriceCommand(WWWEnviroment enviroment) {
-        super(enviroment);
+    public AddRepairPriceCommand(WWWEnvironment environment) {
+        super(environment);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnv
         TuneupLevel level = TuneupLevel.valueOf(args[1]);
         int price = parseIntArgument(2,args);
         int days = parseIntArgument(3,args);
-        enviroment.addRepairPrice(new RepairPrice(brand,level,price,days));
+        environment.addRepairPrice(new RepairPrice(brand,level,price,days));
     }
 }

@@ -5,10 +5,10 @@
  */
 package commandui;
 
-public abstract class ArgumentlessCommand<Enviroment> extends Command<Enviroment> {
+public abstract class ArgumentlessCommand<Environment> extends Command<Environment> {
 
-    public ArgumentlessCommand(Enviroment enviroment) {
-        super(enviroment);
+    public ArgumentlessCommand(Environment environment) {
+        super(environment);
     }
 
     public abstract String getName();

@@ -12,7 +12,7 @@ import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import wheelswithinwheels.WWWEnviroment;
+import wheelswithinwheels.WWWEnvironment;
 
 /**
  *
@@ -32,7 +32,7 @@ public class HelpCommand extends ArgumentlessCommand<WWWUI>{
     @Override
     public void run() throws CommandUIArgumentException {
         TableView helpMessages = new TableView(2);
-        for (Command command: enviroment.getCommands()){
+        for (Command command: environment.getCommands()){
             try {
                 helpMessages.addRow(new String[]{command.getName(),command.getHelpText()});
             } catch (TableViewWidthOverflowException ex) {
