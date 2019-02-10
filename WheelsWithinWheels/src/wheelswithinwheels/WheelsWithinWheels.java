@@ -10,6 +10,7 @@ import commandui.fieldwiseediting.FieldwiseEditable;
 import commandui.fieldwiseediting.FieldwiseEditingUI;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
+import wheelswithinwheels.wwwui.WWWUI;
 
 /**
  *
@@ -18,7 +19,8 @@ import commandui.tableview.TableViewWidthOverflowException;
 public class WheelsWithinWheels {
 
     public static void main(String[] args) {
-        sampleEditing();
+        WWWUI ui = new WWWUI();
+        ui.run();
     }
 
     public static void sampleEditing() {

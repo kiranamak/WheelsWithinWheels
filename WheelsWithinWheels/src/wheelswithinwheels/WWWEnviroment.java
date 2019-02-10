@@ -35,6 +35,7 @@ public class WWWEnviroment {
         customersByNumber = new ArrayList<>(customersByNumber.size());
         payments = new ArrayList<>(payments.size());
         transactions = new ArrayList<>(transactions.size());
+        repairPriceTable = new RepairPriceTable();
     }
     public void persistTo(String filename) throws Exception{
         throw new UnsupportedOperationException();
@@ -84,6 +85,10 @@ public class WWWEnviroment {
     
     public String getAccountsReceiveableReport(){
         throw new UnsupportedOperationException();
+    }
+    
+    public Customer[] getCustomers(){
+        return (Customer[]) customersByName.toArray();
     }
  
 }

@@ -18,7 +18,7 @@ public class RepairPriceTable {
     
     Map<String,Map<TuneupLevel,RepairPrice>> table = new HashMap();
     
-    private RepairPriceTable(){
+    RepairPriceTable(){
         
     }
 
