@@ -30,6 +30,6 @@ public abstract class Command<Environment> {
     }
 
     public String getHelpText() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "No help text provided.";
     }
 }

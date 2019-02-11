@@ -7,10 +7,10 @@ package commandui;
 
 import java.util.Arrays;
 
-public abstract class ArgumentedCommand<Environment> extends Command<Environment> {
+public abstract class ArgumentedCommand<Enviroment> extends Command<Enviroment> {
 
-    public ArgumentedCommand(Environment environment) {
-        super(environment);
+    public ArgumentedCommand(Enviroment enviroment) {
+        super(enviroment);
     }
 
     public abstract String getName();

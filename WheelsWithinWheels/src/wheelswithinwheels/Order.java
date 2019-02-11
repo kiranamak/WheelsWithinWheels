@@ -62,6 +62,7 @@ public class Order implements Transaction {
 
     @Override
     public String getReport() {
+        //TODO: Should use StringBuilder.
         String report = "";
         report += orderDate + "\t";
         report += "#" + String.valueOf(orderNumber);

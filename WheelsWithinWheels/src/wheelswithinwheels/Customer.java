@@ -46,11 +46,9 @@ public class Customer {
         lastCustomerNumber = 0;
     }
 
-    public void complete(LocalDate date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public String shortReport() {
+        //TODO: Should use StringBuilder.
         String report = "";
         report += firstName + " " + lastName;
         report += "(" + customerNumber + ")";

@@ -6,6 +6,7 @@
 package commandui;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -97,5 +98,9 @@ public class CommandUI {
     }
 
     protected void postCommand() {
+    }
+    
+    public final Collection<Command<?>> getCommands(){
+        return commandMap.values();
     }
 }
