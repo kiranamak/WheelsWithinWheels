@@ -16,13 +16,13 @@ public class RepairPriceTable {
 
     public static RepairPriceTable shared = new RepairPriceTable();
     
-    Map<String, Map<TuneupLevel, RepairPrice>> table = new HashMap();
+    Map<String, Map<String, RepairPrice>> table = new HashMap();
     
     RepairPriceTable(){
         
     }
 
-    public RepairPrice getPrice(String brand, TuneupLevel level) {
+    public RepairPrice getPrice(String brand, String level) {
         return table.get(brand).get(level);
     }
 
@@ -36,7 +36,7 @@ public class RepairPriceTable {
         throw new UnsupportedOperationException();
     }
     
-    public TuneupLevel[] getLevels(){
+    public String[] getLevels(){
         throw new UnsupportedOperationException();
     }
 }

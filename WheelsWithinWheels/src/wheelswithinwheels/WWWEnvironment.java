@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.Comparator;
  */
 public class WWWEnvironment {
     
-    public DateTimeFormatter dateFormatter;
+    public  static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
     private ArrayList<Order> orders = new ArrayList<>(100);
     private ArrayList<Customer> customers = new ArrayList<>(100);
     private ArrayList<Payment> payments = new ArrayList<>(100);
@@ -52,7 +53,12 @@ public class WWWEnvironment {
     
     public Transaction[] getTransactions() { 
         Transaction[] transactionsArray = new Payment[transactions.size()];
-        return payments.toArray(transactionsArray);
+        transactionsArray = payments.toArray(transactionsArray);
+        Comparator<Transaction> comparator = null;
+        comparator = (Transaction a, Transaction b) -> 
+                (a.getDate()).compareTo(b.getDate());
+        Arrays.sort(transactionsArray, comparator);
+        return transactionsArray;
     }
     
     public RepairPriceTable getPricesTable() { return repairPriceTable; }
@@ -67,22 +73,20 @@ public class WWWEnvironment {
         throw new UnsupportedOperationException();
     }
     
-    public void addOrder(Order order) {
-        orders.add(order);
-        transactions.add(order);
+    public void addOrder(Customer customer, LocalDate date, String brand, String level, String comment) {
+        orders.add(new Order(customer, date, brand, level, comment));
     }
     
     public void addPayment(Payment payment) {
         payments.add(payment);
-        transactions.add(payment);
     }
     
     public void addRepairPrice(RepairPrice price) {
         repairPriceTable.addPrice(price);
     }
     
-    public void addCustomer(Customer customer) {
-        customers.add(customers.size(), customer);
+    public void addCustomer(String fName, String lName) {
+        customers.add(customers.size(), new Customer(fName, lName));
     }
 
     public Customer getCustomer(int customerNumber) {

@@ -16,7 +16,10 @@ public class Customer {
     private final String firstName;
     private final String lastName;
     private final int customerNumber;
-
+    private OrderStatus status;
+    private LocalDate dateCompleted;
+    private LocalDate dateReturned;
+    
     private static int lastCustomerNumber = 0;
     
     
@@ -24,6 +27,7 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.customerNumber = ++Customer.lastCustomerNumber;
+        status = OrderStatus.PENDING;
     }
 
     public String getFirstName() {
@@ -46,6 +50,15 @@ public class Customer {
         lastCustomerNumber = 0;
     }
 
+    public void complete(LocalDate date) {
+        status = OrderStatus.COMPLETED;
+        this.dateCompleted = date;
+    }
+    
+    public void returned(LocalDate date) {
+        status = OrderStatus.RETURNED;
+        this.dateReturned = date;
+    } 
     
     public String shortReport() {
         //TODO: Should use StringBuilder.

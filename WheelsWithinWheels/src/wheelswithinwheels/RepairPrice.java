@@ -12,11 +12,11 @@ package wheelswithinwheels;
 public class RepairPrice {
 
     String brand;
-    TuneupLevel level;
+    String level;
     int price;
     int repairLength;
 
-    public RepairPrice(String brand, TuneupLevel level, int price, int repairLength) {
+    public RepairPrice(String brand, String level, int price, int repairLength) {
         this.brand = brand;
         this.level = level;
         this.price = price;
@@ -27,7 +27,7 @@ public class RepairPrice {
         return brand;
     }
 
-    TuneupLevel getLevel() {
+    String getLevel() {
         return level;
     }
 

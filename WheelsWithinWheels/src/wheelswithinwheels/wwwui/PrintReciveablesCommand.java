@@ -26,6 +26,7 @@ public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment>
 
     @Override
     public void run() throws CommandUIArgumentException {
+        //purpose: print one line per customer to show how much they how (who owes him what)
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

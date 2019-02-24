@@ -13,8 +13,7 @@ public abstract class ArgumentedCommand<Enviroment> extends Command<Enviroment> 
         super(enviroment);
     }
 
-    public abstract String getName();
-
+    @Override
     public void run(String args) throws CommandUIArgumentException {
         String[] rawArgs = args.split("\\s+");
         String[] sepArgs = Arrays.stream(rawArgs)

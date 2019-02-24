@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 import wheelswithinwheels.RepairPrice;
 import wheelswithinwheels.RepairPriceTable;
-import wheelswithinwheels.TuneupLevel;
 import wheelswithinwheels.WWWEnvironment;
 
 /**
@@ -35,7 +34,7 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
     public void run() throws CommandUIArgumentException {
         RepairPriceTable pricesTable = environment.getPricesTable();
         String[] brands = pricesTable.getBrands();
-        TuneupLevel[] levels = pricesTable.getLevels();
+        String[] levels = pricesTable.getLevels();
         TableView table = new TableView(levels.length);
         String[] headers = (String[]) Stream.concat(Stream.of("Prices"),
                 Arrays.stream(levels).map(Object::toString)
@@ -44,7 +43,7 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
             table.addRow(headers);
             for (String brand:brands){
                 Stream rowData = Arrays.stream(levels)
-                                .map((TuneupLevel level)->pricesTable.getPrice(brand,level))
+                                .map((String level)->pricesTable.getPrice(brand,level))
                                 .map((RepairPrice price)->Integer.toString(price.getPrice()));
                 String[] row = (String[])Stream.concat(Stream.of(brand),rowData).toArray();
                 table.addRow(headers);

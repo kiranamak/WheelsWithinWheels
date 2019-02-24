@@ -10,8 +10,6 @@ import commandui.Command;
 import commandui.CommandUIArgumentException;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import wheelswithinwheels.WWWEnvironment;
 
 /**
@@ -41,5 +39,4 @@ public class HelpCommand extends ArgumentlessCommand<WWWUI>{
         }
         System.out.println(helpMessages.toString());
     }
-    
 }

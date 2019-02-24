@@ -16,7 +16,7 @@ public class Order implements Transaction {
 
     private final Customer customer;
     private final String brand;
-    private final TuneupLevel level;
+    private final String level;
     private final String comment;
     private final LocalDate orderDate;
     private final LocalDate completeDate = null;
@@ -25,7 +25,7 @@ public class Order implements Transaction {
 
     private static int lastOrderNumber = 0;
     
-    Order(Customer customer, String brand, TuneupLevel level, String comment,LocalDate orderDate){
+    Order(Customer customer, LocalDate orderDate, String brand, String level, String comment){
         this.customer = customer;
         this.brand = brand;
         this.level = level;
@@ -69,7 +69,7 @@ public class Order implements Transaction {
         report += status.value();
         report += customer.shortReport();
         report += brand;
-        report += level.value() + "; ";
+        report += level + "; ";
         report += "due:" + getPromisedDate();
         if (!comment.equals("")) { report += " comment: " + comment; }
         return report;
@@ -83,7 +83,9 @@ public class Order implements Transaction {
         return comment;
     }
     
-    LocalDate getOrderDate(){
+    
+    @Override
+    public LocalDate getDate(){
         return orderDate;
     }
     

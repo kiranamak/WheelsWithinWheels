@@ -32,7 +32,8 @@ public class Payment implements Transaction {
         return amount;
     }
 
-    LocalDate getDate() {
+    @Override
+    public LocalDate getDate() {
         return date;
     }
 

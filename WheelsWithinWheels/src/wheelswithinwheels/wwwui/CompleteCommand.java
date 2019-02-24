@@ -35,7 +35,7 @@ public class CompleteCommand extends KnownLengthArgumentListCommand<WWWEnvironme
     public void run(String[] args) throws CommandUIArgumentException{
         super.run(args);
         Customer customer = environment.getCustomer(parseIntArgument(0,args));
-        LocalDate date = LocalDate.parse(args[1],environment.dateFormatter);
+        LocalDate date = parseDateArgument(1, args);
         customer.complete(date);
     }
     
