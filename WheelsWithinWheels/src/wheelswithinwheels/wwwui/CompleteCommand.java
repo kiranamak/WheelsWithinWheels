@@ -9,6 +9,7 @@ import commandui.CommandUIArgumentException;
 import commandui.KnownLengthArgumentListCommand;
 import java.time.LocalDate;
 import wheelswithinwheels.Customer;
+import wheelswithinwheels.Order;
 import wheelswithinwheels.WWWEnvironment;
 
 /**
@@ -34,9 +35,9 @@ public class CompleteCommand extends KnownLengthArgumentListCommand<WWWEnvironme
     @Override
     public void run(String[] args) throws CommandUIArgumentException{
         super.run(args);
-        Customer customer = environment.getCustomer(parseIntArgument(0,args));
-        LocalDate date = parseDateArgument(1, args);
-        customer.complete(date);
+        Order order = environment.getOrder(parseIntArgument(0,args));
+        LocalDate date = LocalDate.parse(args[1],environment.formatter);
+        order.complete(date);
     }
     
 }
