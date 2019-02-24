@@ -88,5 +88,9 @@ public class Order implements Transaction {
     public LocalDate getDate(){
         return orderDate;
     }
+
+    public void complete(LocalDate date) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
