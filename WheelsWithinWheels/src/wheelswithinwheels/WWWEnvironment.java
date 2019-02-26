@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
+import java.util.stream.Stream;
 /**
  *
  * @author asa
@@ -85,8 +86,9 @@ public class WWWEnvironment {
     }
     
     public Transaction[] getTransactions() { 
-        Transaction[] transactionsArray = new Payment[transactions.size()];
-        transactionsArray = payments.toArray(transactionsArray);
+        Transaction[] transactionsArray = new Transaction[orders.size() + payments.size()];
+        transactionsArray = Stream.concat(Arrays.stream(getOrders()), Arrays.stream(getPayments()))
+                      .toArray(Transaction[]::new);
         Comparator<Transaction> comparator = null;
         comparator = (Transaction a, Transaction b) -> 
                 (a.getDate()).compareTo(b.getDate());
@@ -103,19 +105,21 @@ public class WWWEnvironment {
         transactions = new ArrayList<>(transactions.size());
     }
     public void persistTo(String filename) throws Exception {
-        //Still working on getting this to work :/ it won't accept "C:\desktop\" due to the backwards slashes "\"
+        //Still working on getting this to work -_- it won't accept "C:\desktop\" due to the backwards slashes "\"
         String file_path = "desktop";
-        makeFile(file_path, filename);
+        makeFile(file_path, filename+".txt");
         int index = 0;
         while (index != getCustomersByNumber().length){
-            saveToFile(getCustomersByNumber()[index], file_path + filename, true);
+            saveToFile("addc "+getCustomersByNumber()[index].getFirstName()+" "+getCustomersByNumber()[index].getLastName(), file_path + filename, true);
             index += 1;
         }
+        /*
         while (index != getTransactions().length){
             saveToFile(getTransactions()[index], file_path + filename, true);
             index += 1;
         }
         saveToFile(getPricesTable(), file_path + filename, true);
+*/
     }
     
     public void addOrder(Customer customer, LocalDate date, String brand, String level, String comment) {
