@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.util.stream.Stream;
+
 /**
  *
  * @author asa
@@ -35,9 +36,9 @@ public class WWWEnvironment {
         //creates the file
         File file = new File(file_path);
         //names the file
-        file = new File(fileName);
+        file = new File(fileName + ".txt");
     }
-    public void saveToFile(Object text, String file_path, boolean addValue) throws IOException{
+    public void saveToFile(String text, String file_path, boolean addValue) throws IOException{
         FileWriter writing = new FileWriter(file_path, addValue);
         PrintWriter saveToLine = new PrintWriter(writing);
         //adds to file
@@ -145,6 +146,29 @@ public class WWWEnvironment {
     public Order getOrder(int orderNumber) {
         return orders.get(orderNumber - 1);
     }
+    
+    public Order[] getOrderForCustomer(int customerNumber) {
+        ArrayList<Order> results = new ArrayList<>(5);
+        for (Order order: orders) {
+            if (order.customer.getCustomerNumber == customerNumber) {
+                results.add(order);
+            }
+        }
+        Order[] resultsArray = new Order[results.size()];
+        return results.toArray(resultsArray);
+    }
+    
+    public Payment[] getPaymentForCustomer(int customerNumber) {
+        ArrayList<Payment> results = new ArrayList<>(5);
+        for (Payment payment: payments) {
+            if (payment.customer.getCustomerNumber == customerNumber) {
+                results.add(payment);
+            }
+        }
+        Payment[] resultsArray = new Payment[results.size()];
+        return results.toArray(resultsArray);
+    }
+
     
     public String getStatementReport() {
         throw new UnsupportedOperationException();
