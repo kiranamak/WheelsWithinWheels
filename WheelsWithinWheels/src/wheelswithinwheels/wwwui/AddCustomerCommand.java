@@ -8,7 +8,6 @@ package wheelswithinwheels.wwwui;
 import wheelswithinwheels.WWWEnvironment;
 import commandui.CommandUIArgumentException;
 import commandui.KnownLengthArgumentListCommand;
-import wheelswithinwheels.Customer;
 
 /**
  *
@@ -32,7 +31,7 @@ public class AddCustomerCommand extends KnownLengthArgumentListCommand<WWWEnviro
     
     @Override
     public void run(String[] args) throws CommandUIArgumentException{
-        
-        environment.addCustomer(args[0],args[1]);
+        super.run(args);
+        environment.addCustomer(args[0], args[1]);
     }
 }

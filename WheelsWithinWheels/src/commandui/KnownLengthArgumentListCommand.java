@@ -17,8 +17,6 @@ public abstract class KnownLengthArgumentListCommand<Environment>
     @Override
     public void run(String[] args) throws CommandUIArgumentException {
         if (args.length != argumentCount()) {
-            System.out.println("DEBUG: "+getName());
-            System.out.println("DEBUG: "+argumentCount());
             throw new CommandUIArgumentException(argumentCount(), args.length);
         }
     }
