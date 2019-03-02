@@ -100,4 +100,11 @@ public class Order implements Transaction {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public String shortReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("Order #" + orderNumber);
+        report.append(brand + ", " + level);
+        return report.toString();
+    }
+
 }

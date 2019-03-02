@@ -52,4 +52,6 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
             System.out.println("THANK YOU FOR CHOOSING WHEELS WITHIN WHEELS BIKE SHOP!");
         }
     }
+
 }
+
