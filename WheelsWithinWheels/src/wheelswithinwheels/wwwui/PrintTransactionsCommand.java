@@ -30,4 +30,5 @@ public class PrintTransactionsCommand extends ArgumentlessCommand<WWWEnvironment
             System.out.println(transaction.getReport());
         }
     }
+
 }

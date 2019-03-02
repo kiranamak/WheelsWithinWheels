@@ -7,10 +7,9 @@ package wheelswithinwheels.wwwui;
 
 import commandui.CommandUIArgumentException;
 import commandui.KnownLengthArgumentListCommand;
-import java.time.LocalDate;
-import wheelswithinwheels.Customer;
-import wheelswithinwheels.Payment;
+import wheelswithinwheels.RepairPrice;
 import wheelswithinwheels.WWWEnvironment;
+import wheelswithinwheels.RepairPriceTable;
 
 /**
  *
@@ -32,6 +31,12 @@ public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnv
         return "addrp";
     }
     
+    private void checkRepairPrice(String brand, String level) throws CommandUIArgumentException {
+        if (RepairPriceTable.shared.getPrice(brand, level) != null) {
+            throw new CommandUIArgumentException("A repair price with brand " + brand + " and level " + level + " already exists.");
+        }
+    }
+    
     @Override
     public void run(String[] args)throws CommandUIArgumentException{
         super.run(args);
@@ -39,6 +44,7 @@ public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnv
         String level = args[1];
         int price = parseIntArgument(2,args);
         int days = parseIntArgument(3,args);
-        environment.addRepairPrice(brand,level,price,days);
+        checkRepairPrice(brand, level);
+        environment.addRepairPrice(new RepairPrice(brand,level,price,days));
     }
 }
