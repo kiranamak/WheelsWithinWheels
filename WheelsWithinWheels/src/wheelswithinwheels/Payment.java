@@ -18,7 +18,7 @@ public class Payment implements Transaction {
     int amount;
     LocalDate date;
 
-    public Payment(Customer customer, LocalDate date, int amount) {
+    Payment(Customer customer, LocalDate date, int amount) {
         this.customer = customer;
         this.amount = amount;
         this.date = date;
@@ -32,8 +32,7 @@ public class Payment implements Transaction {
         return amount;
     }
 
-    @Override
-    public LocalDate getDate() {
+    LocalDate getDate() {
         return date;
     }
 

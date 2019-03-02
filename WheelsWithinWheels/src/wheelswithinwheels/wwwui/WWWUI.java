@@ -7,6 +7,7 @@ package wheelswithinwheels.wwwui;
 
 import commandui.Command;
 import commandui.CommandUI;
+import java.io.InputStream;
 import wheelswithinwheels.WWWEnvironment;
 import wheelswithinwheels.wwwui.PrintCustomersCommand.CustomerSort;
 
@@ -15,7 +16,9 @@ import wheelswithinwheels.wwwui.PrintCustomersCommand.CustomerSort;
  * @author asa
  */
 public class WWWUI extends CommandUI{
+
     WWWEnvironment environment;
+
     
     
     public WWWUI(){
