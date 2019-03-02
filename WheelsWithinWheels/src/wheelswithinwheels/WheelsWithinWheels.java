@@ -19,7 +19,7 @@ import wheelswithinwheels.wwwui.WWWUI;
 public class WheelsWithinWheels {
 
     public static void main(String[] args) {
-         WWWUI ui = new WWWUI();
+        WWWUI ui = new WWWUI();
         ui.run();
     }
 

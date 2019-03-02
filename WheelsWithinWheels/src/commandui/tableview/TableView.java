@@ -7,7 +7,6 @@ package commandui.tableview;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -18,7 +17,7 @@ public class TableView {
 
     ArrayList<ArrayList<String>> columns;
     int width;
-    String columnDelimiter = " ";
+    String columnDelimiter = "  ";
 
     public static int startingDepth = 4;
 
@@ -57,7 +56,6 @@ public class TableView {
 
     @Override
     public String toString() {
-        System.out.println(maxHeight());
         int[] widths = widths();
         StringBuffer result = new StringBuffer();
         for (int i = 0; i < maxHeight(); i++) {
@@ -69,7 +67,27 @@ public class TableView {
                 } catch (IndexOutOfBoundsException e) {
                     cell = "";
                 }
-                result.append(paddedCell(cell, widths[j]));
+                result.append(paddedCell(cell, widths[j], false));
+                result.append(columnDelimiter);
+            }
+            result.append("\n");
+        }
+        return result.toString();
+    }
+    
+    public String toStringFormatted(Boolean[] right) {
+        int[] widths = widths();
+        StringBuffer result = new StringBuffer();
+        for (int i = 0; i < maxHeight(); i++) {
+            for (int j = 0; j < columns.size(); j++) {
+                ArrayList<String> column = columns.get(j);
+                String cell;
+                try {
+                    cell = column.get(i);
+                } catch (IndexOutOfBoundsException e) {
+                    cell = "";
+                }
+                result.append(paddedCell(cell, widths[j], right[j]));
                 result.append(columnDelimiter);
             }
             result.append("\n");
@@ -88,23 +106,23 @@ public class TableView {
         return widths;
     }
 
-    private String paddedCell(String cell, int width) {
+    private String paddedCell(String cell, int width, boolean right) {
         StringBuffer result = new StringBuffer(cell);
         while (result.length() < width) {
-            result.append(" ");
+            if (right) {
+                result.insert(0, " ");
+            } else {
+                result.append(" ");
+            }
         }
         return result.toString();
     }
 
     private int maxHeight() {
-        IntStream a = Stream.of(columns)
-                .mapToInt(ArrayList::size);
-        System.out.println(Arrays.toString(a.toArray()));
-//        int b = a
-//                .max()
-//                .orElse(0);
-//        return b;
-return 0;
+        return Stream.of(columns)
+                .mapToInt(ArrayList::size)
+                .max()
+                .orElse(0);
     }
 
 
