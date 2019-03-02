@@ -181,4 +181,27 @@ public class WWWEnvironment {
     public String getAccountsReceiveableReport(){
         throw new UnsupportedOperationException();
     } 
+    
+    public Order[] getOrderForCustomer(int customerNumber) {
+        ArrayList<Order> results = new ArrayList<>(5);
+        for (Order order: orders) {
+            if (order.customer.getCustomerNumber == customerNumber) {
+                results.add(order);
+            }
+        }
+        Order[] resultsArray = new Order[results.size()];
+        return results.toArray(resultsArray);
+    }
+
+    public Payment[] getPaymentForCustomer(int customerNumber) {
+        ArrayList<Payment> results = new ArrayList<>(5);
+        for (Payment payment: payments) {
+            if (payment.customer.getCustomerNumber == customerNumber) {
+                results.add(payment);
+            }
+        }
+        Payment[] resultsArray = new Payment[results.size()];
+        return results.toArray(resultsArray);
+    }
+
 }
