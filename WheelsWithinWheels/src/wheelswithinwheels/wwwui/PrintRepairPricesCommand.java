@@ -11,7 +11,7 @@ import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 import java.util.Arrays;
 import java.util.stream.Stream;
-import wheelswithinwheels.RepairPrice;
+import wheelswithinwheels.RepairPriceEntry;
 import wheelswithinwheels.RepairPriceTable;
 import wheelswithinwheels.WWWEnvironment;
 
@@ -42,11 +42,11 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
         try {
             table.addRow(headers);
             for (String brand:brands){
-                Stream rowData = Arrays.stream(levels)
+                Stream<String> rowData = Arrays.stream(levels)
                                 .map((String level)->pricesTable.getPrice(brand,level))
-                                .map((RepairPrice price)->Integer.toString(price.getPrice()));
+                                .map((RepairPriceEntry price)->Integer.toString(price.getPrice()));
                 String[] row = (String[])Stream.concat(Stream.of(brand),rowData).toArray();
-                table.addRow(headers);
+                table.addRow(row);
             }
         } catch (TableViewWidthOverflowException ex) {
             throw new RuntimeException();

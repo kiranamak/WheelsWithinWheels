@@ -5,10 +5,6 @@
  */
 package commandui;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import wheelswithinwheels.WWWEnvironment;
-
 /**
  *
  * @author asa
@@ -29,18 +25,7 @@ public abstract class Command<Environment> {
         try {
             return Integer.parseInt(args[argPos]);
         } catch (NumberFormatException e) {
-            throw new CommandUIArgumentException(1 + argPos, args[argPos], "an integer");
-        }
-    }
-    
-    protected LocalDate parseDateArgument(int argPos, String[] args) throws CommandUIArgumentException {
-        try {
-            DateTimeFormatter formatter = WWWEnvironment.formatter;
- 
-            LocalDate date = LocalDate.parse(args[argPos], formatter);
-            return date;
-        } catch (Exception e) {
-            throw new CommandUIArgumentException(argPos + 1, args[argPos], "MMDDYYYY");
+            throw new CommandUIArgumentException(1, args[argPos], "an integer");
         }
     }
 

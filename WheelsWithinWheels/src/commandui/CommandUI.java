@@ -5,6 +5,7 @@
  */
 package commandui;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.Scanner;
  */
 public class CommandUI {
 
-    private final Scanner scanner;
+    private Scanner scanner;
     private String welcomeMessage = "";
     private String prompt = ">";
     private HashMap<String, Command<?>> commandMap;
@@ -102,5 +103,13 @@ public class CommandUI {
     
     public final Collection<Command<?>> getCommands(){
         return commandMap.values();
+    }
+    
+    public final void useScanner(Scanner scanner){
+        this.scanner = scanner;
+    }
+    
+    public final void useInputStream(InputStream stream){
+        this.useScanner(new Scanner(stream));
     }
 }

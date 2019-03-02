@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package wheelswithinwheels;
-import java.time.LocalDate;
 
 /**
  *
@@ -13,5 +12,4 @@ import java.time.LocalDate;
 public interface Transaction {
 
     String getReport();
-    LocalDate getDate();
 }
