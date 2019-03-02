@@ -34,5 +34,6 @@ public class CommandUIArgumentException extends Exception {
 
     public CommandUIArgumentException(int expected, int recieved) {
         super("Expected " + expected + " arguments, revieved " + recieved + " instead.");
+
     }
 }

@@ -29,7 +29,7 @@ public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnviron
 
     @Override
     public String getName() {
-        return "addc";
+        return "addp";
     }
     
     @Override
@@ -37,10 +37,9 @@ public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnviron
         super.run(args);
         int customerNumber = parseIntArgument(0,args);
         Customer customer = environment.getCustomer(customerNumber);
-        LocalDate date = parseDateArgument(1, args);
+        LocalDate date = LocalDate.parse(args[1],environment.dateFormatter);
         int amount = parseIntArgument(2,args);
-        Payment payment = new Payment(customer, date, amount);
-        environment.addPayment(payment);
+        environment.addPayment(customer,date,amount);
     }
     
 }

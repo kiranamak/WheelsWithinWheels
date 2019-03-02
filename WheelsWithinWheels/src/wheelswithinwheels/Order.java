@@ -5,6 +5,8 @@
  */
 package wheelswithinwheels;
 
+import wheelswithinwheels.RepairPriceEntry;
+import wheelswithinwheels.RepairPriceTable;
 import java.time.LocalDate;
 
 
@@ -23,25 +25,24 @@ public class Order implements Transaction {
     private OrderStatus status;
     private final int orderNumber;
 
-    private static int lastOrderNumber = 0;
     
-    Order(Customer customer, LocalDate orderDate, String brand, String level, String comment){
+    Order(Customer customer, String brand, String level, String comment,LocalDate orderDate,int orderNumber){
         this.customer = customer;
         this.brand = brand;
         this.level = level;
         this.comment = comment;
         this.orderDate = orderDate;
         this.status = OrderStatus.PENDING;
-        this.orderNumber = ++Order.lastOrderNumber;
+        this.orderNumber = orderNumber;
         
     }
 
-    RepairPrice getRepairPrice() {
+    RepairPriceEntry getRepairPrice() {
         return RepairPriceTable.shared.getPrice(brand, level);
     }
 
     LocalDate getPromisedDate() {
-        return orderDate.plusDays(getRepairPrice().getRepairLength());
+        return orderDate.plusDays(getRepairPrice().getReturnTime());
     }
 
     OrderStatus getStatus(){
@@ -75,13 +76,6 @@ public class Order implements Transaction {
         return report;
     }
     
-    public String shortReport() {
-        StringBuilder report = new StringBuilder();
-        report.append("Order #" + orderNumber);
-        report.append(brand + ", " + level);
-        return report.toString();
-    }
-    
     Customer getCustomer(){
         return customer;
     }
@@ -90,9 +84,7 @@ public class Order implements Transaction {
         return comment;
     }
     
-    
-    @Override
-    public LocalDate getDate(){
+    LocalDate getOrderDate(){
         return orderDate;
     }
 
