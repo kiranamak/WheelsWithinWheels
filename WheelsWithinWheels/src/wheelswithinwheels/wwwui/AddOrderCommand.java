@@ -30,8 +30,8 @@ public class AddOrderCommand extends KnownLengthArgumentListCommand<WWWEnvironme
     }
     
     private void checkRepairPrice(String brand, String level) throws CommandUIArgumentException {
-        if (RepairPriceTable.shared.getPrice(level, brand) == null) {
-            throw new CommandUIArgumentException("invalid repair brand and level combination");
+        if (environment.getRepairPriceTable().getPrice(level, brand) == null) {
+            throw new CommandUIArgumentException("Invalid repair brand and level combination");
         }
     }
 
@@ -40,8 +40,8 @@ public class AddOrderCommand extends KnownLengthArgumentListCommand<WWWEnvironme
         super.run(args);
         int customerNumber = parseIntArgument(0, args);
         Customer customer = environment.getCustomer(customerNumber);
-        LocalDate date = parseDateArgument(1, args);
+        LocalDate date = parseDateArgument(1, args,environment.dateFormatter);
         checkRepairPrice(args[2], args[3]);
-        environment.addOrder(customer, date, args[2], args[3], args[4]);
+        environment.addOrder(customer, args[2], args[3], args[4], date);
     }
 }

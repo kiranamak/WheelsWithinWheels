@@ -39,7 +39,7 @@ public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment>
         try {
             table.addRow(columnHeader);
             for(Customer c: environment.getCustomersByName()) {
-                int[] data = c.receivableReport(environment.getTransactions());
+                int[] data = c.receivableReport(environment.getTransactionsByDate(),environment);
                 String[] report = {Integer.toString(c.getCustomerNumber()), c.getFullName(), "$" + Integer.toString(data[0]), "$" + Integer.toString(data[1]), "$" + Integer.toString(data[2])};
                 table.addRow(report);
                 totalReceivable += data[0];

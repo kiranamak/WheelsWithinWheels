@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -26,12 +28,27 @@ import java.util.stream.Stream;
  */
 public class WWWEnvironment {
     
-    public  static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
-    private ArrayList<Order> orders = new ArrayList<>(100);
-    private ArrayList<Customer> customers = new ArrayList<>(100);
-    private ArrayList<Payment> payments = new ArrayList<>(100);
-    private ArrayList<Transaction> transactions = new ArrayList<>(100);
-    private RepairPriceTable repairPriceTable;
+    public DateTimeFormatter dateFormatter;
+    private final RepairPriceTable repairPriceTable;
+    
+    private List<Customer> customers;
+    private List<Order> orders;
+    private List<Payment> payments;
+
+    private int nextCustomerNumber;
+    private int lastOrderNumber;
+
+    public WWWEnvironment(){
+        this.nextCustomerNumber = 0;
+        this.lastOrderNumber = 0;
+        this.payments = new ArrayList<>();
+        this.orders = new ArrayList<>();
+        this.customers = new ArrayList<>();
+        dateFormatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        repairPriceTable = new RepairPriceTable();
+
+    }
+    
     
     public void makeFile(String file_path, String fileName) throws FileNotFoundException{
         //creates the file
@@ -61,50 +78,56 @@ public class WWWEnvironment {
     }
     
     public Order[] getOrders() { 
-        Order[] ordersArray = new Order[orders.size()];
-        return orders.toArray(ordersArray);
+        return (Order[]) orders.stream()
+            .filter(Objects::nonNull)
+            .toArray();
+    }
+
+    public Customer[] getCustomers(){
+        return customers.stream()
+                .filter(Objects::nonNull)
+                .toArray(Customer[]::new);
     }
     
     public Customer[] getCustomersByName() { 
-        Customer[] customersByNameArray = new Customer[customers.size()];
-        customersByNameArray = customers.toArray(customersByNameArray);
-        Comparator<Customer> comparator = null;
-        comparator = (Customer a, Customer b)->
-                        (a.getFullName()).compareTo(b.getFullName());
-        Arrays.sort(customersByNameArray, comparator);
-        return customersByNameArray;
+        Customer[] customersByName = getCustomers();
+        Arrays.sort(customersByName, (Customer a, Customer b)->
+                        (a.getFullName()).compareTo(b.getFullName()));
+        return customersByName;
     }
     
     public Customer[] getCustomersByNumber() {
-        Customer[] customersByNumberArray = new Customer[customers.size()];
-        return customers.toArray(customersByNumberArray);
+        return getCustomers();
     }
     
-    public int getNumberCustomers() { return customers.size(); }
+    public int getNumberCustomers() {
+        return customers.size();
+    } 
     
     public Payment[] getPayments() { 
-        Payment[] paymentsArray = new Payment[payments.size()];
-        return payments.toArray(paymentsArray);
+        return (Payment[]) payments.toArray();
     }
     
-    public Transaction[] getTransactions() { 
-        Transaction[] transactionsArray = new Transaction[orders.size() + payments.size()];
-        transactionsArray = Stream.concat(Arrays.stream(getOrders()), Arrays.stream(getPayments()))
+    public Transaction[] getTransactions(){
+        return Stream.concat(Arrays.stream(getOrders()), Arrays.stream(getPayments()))
                       .toArray(Transaction[]::new);
-        Comparator<Transaction> comparator = null;
-        comparator = (Transaction a, Transaction b) -> 
-                (a.getDate()).compareTo(b.getDate());
-        Arrays.sort(transactionsArray, comparator);
-        return transactionsArray;
+        
     }
     
-    public RepairPriceTable getPricesTable() { return repairPriceTable; }
+    public Transaction[] getTransactionsByDate() { 
+        Transaction[] transactions = getTransactions();
+        Arrays.sort(transactions, (Transaction a, Transaction b) -> 
+                a.getDate().compareTo(b.getDate())
+        );
+        return transactions;
+    }
+    
+    public RepairPriceTable getRepairPriceTable() { return repairPriceTable; }
   
     public void reset() {
         orders = new ArrayList<>(orders.size());
         customers = new ArrayList<>(customers.size());
         payments = new ArrayList<>(payments.size());
-        transactions = new ArrayList<>(transactions.size());
     }
     public void persistTo(String filename) throws Exception {
         //Still working on getting this to work -_- it won't accept "C:\desktop\" due to the backwards slashes "\"
@@ -124,50 +147,58 @@ public class WWWEnvironment {
 */
     }
     
-    public void addOrder(Customer customer, LocalDate date, String brand, String level, String comment) {
-        orders.add(new Order(customer, date, brand, level, comment));
+    public Order addOrder(Customer customer, String brand, String level, String comment,LocalDate orderDate) {
+        int number = ++lastOrderNumber;
+        while (orders.size()<=number) 
+            orders.add(null);
+        Order order = new Order(customer, brand,level,orderDate,comment,number);
+        orders.set(number,order);
+        return order;
     }
     
-    public void addPayment(Payment payment) {
+    
+    public Payment addPayment(Customer customer, LocalDate date, int amount) {
+        Payment payment = new Payment(customer,date,amount);
         payments.add(payment);
+        return payment;
     }
     
-    public void addRepairPrice(RepairPrice price) {
-        repairPriceTable.addPrice(price);
+    public void addRepairPrice(String brand,String level,int returnTime,int price) {
+        repairPriceTable.addPrice(brand,level,new RepairPriceEntry(returnTime,price));
     }
     
-    public void addCustomer(String fName, String lName) {
-        customers.add(customers.size(), new Customer(fName, lName));
+    public Customer addCustomer(String firstName, String lastName) {
+        int number = nextCustomerNumber;
+        nextCustomerNumber++;
+        while (customers.size()<=number) 
+            customers.add(null);
+        Customer customer = new Customer(firstName,lastName,number);
+        customers.set(number,customer);
+        return customer;
     }
 
     public Customer getCustomer(int customerNumber) {
-        return customers.get(customerNumber - 1);
+        Customer customer =  customers.get(customerNumber);
+        assert(customer == null || customer.getCustomerNumber()==customerNumber);
+        return customer;
     }
     
     public Order getOrder(int orderNumber) {
-        return orders.get(orderNumber - 1);
+        Order order =  orders.get(orderNumber);
+        assert(order == null || order.getOrderNumber()==orderNumber);
+        return order;
     }
     
-    public Order[] getOrderForCustomer(int customerNumber) {
-        ArrayList<Order> results = new ArrayList<>(5);
-        for (Order order: orders) {
-            if (order.customer.getCustomerNumber == customerNumber) {
-                results.add(order);
-            }
-        }
-        Order[] resultsArray = new Order[results.size()];
-        return results.toArray(resultsArray);
+    public Order[] getOrdersForCustomer(int customerNumber) {
+        return orders.stream()
+                .filter((Order order)->order.getCustomer().getCustomerNumber()==customerNumber)
+                .toArray(Order[]::new);
     }
     
-    public Payment[] getPaymentForCustomer(int customerNumber) {
-        ArrayList<Payment> results = new ArrayList<>(5);
-        for (Payment payment: payments) {
-            if (payment.customer.getCustomerNumber == customerNumber) {
-                results.add(payment);
-            }
-        }
-        Payment[] resultsArray = new Payment[results.size()];
-        return results.toArray(resultsArray);
+    public Payment[] getPaymentsForCustomer(int customerNumber) {
+        return payments.stream()
+                .filter((Payment payment)->payment.getCustomer().getCustomerNumber()==customerNumber)
+                .toArray(Payment[]::new);
     }
 
     
@@ -179,28 +210,6 @@ public class WWWEnvironment {
         throw new UnsupportedOperationException();
     } 
 
-    
-    public Order[] getOrderForCustomer(int customerNumber) {
-        ArrayList<Order> results = new ArrayList<>(5);
-        for (Order order: orders) {
-            if (order.customer.getCustomerNumber == customerNumber) {
-                results.add(order);
-            }
-        }
-        Order[] resultsArray = new Order[results.size()];
-        return results.toArray(resultsArray);
-    }
-
-    public Payment[] getPaymentForCustomer(int customerNumber) {
-        ArrayList<Payment> results = new ArrayList<>(5);
-        for (Payment payment: payments) {
-            if (payment.customer.getCustomerNumber == customerNumber) {
-                results.add(payment);
-            }
-        }
-        Payment[] resultsArray = new Payment[results.size()];
-        return results.toArray(resultsArray);
-    }
 
 }
 

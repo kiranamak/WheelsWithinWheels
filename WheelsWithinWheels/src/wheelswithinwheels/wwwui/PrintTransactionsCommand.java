@@ -25,9 +25,9 @@ public class PrintTransactionsCommand extends ArgumentlessCommand<WWWEnvironment
     
     @Override
     public void run() throws CommandUIArgumentException {
-        Transaction[] transactions = environment.getTransactions();
+        Transaction[] transactions = environment.getTransactionsByDate();
         for (Transaction transaction: transactions) {
-            System.out.println(transaction.getReport());
+            System.out.println(transaction.getReport(environment));
         }
     }
 

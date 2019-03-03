@@ -7,7 +7,7 @@ package wheelswithinwheels.wwwui;
 
 import commandui.CommandUIArgumentException;
 import commandui.KnownLengthArgumentListCommand;
-import wheelswithinwheels.RepairPrice;
+import wheelswithinwheels.RepairPriceEntry;
 import wheelswithinwheels.WWWEnvironment;
 import wheelswithinwheels.RepairPriceTable;
 
@@ -32,7 +32,8 @@ public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnv
     }
     
     private void checkRepairPrice(String brand, String level) throws CommandUIArgumentException {
-        if (RepairPriceTable.shared.getPrice(brand, level) != null) {
+        //TODO: This should allow overwriting repair prices
+        if (environment.getRepairPriceTable().getPrice(brand, level) != null) {
             throw new CommandUIArgumentException("A repair price with brand " + brand + " and level " + level + " already exists.");
         }
     }
@@ -45,6 +46,6 @@ public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnv
         int price = parseIntArgument(2,args);
         int days = parseIntArgument(3,args);
         checkRepairPrice(brand, level);
-        environment.addRepairPrice(new RepairPrice(brand,level,price,days));
+        environment.addRepairPrice(brand,level,price,days);
     }
 }

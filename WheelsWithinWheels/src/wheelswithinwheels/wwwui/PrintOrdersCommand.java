@@ -27,7 +27,7 @@ public class PrintOrdersCommand extends ArgumentlessCommand<WWWEnvironment> {
     public void run() throws CommandUIArgumentException {
         Order[] orders = environment.getOrders();
         for (Order order: orders) {
-            System.out.println(order.getReport());
+            System.out.println(order.getReport(environment));
         }
     }
 }

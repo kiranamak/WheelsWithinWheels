@@ -12,6 +12,6 @@ import java.time.LocalDate;
  */
 public interface Transaction {
 
-    String getReport();
+    String getReport(WWWEnvironment environment);
     LocalDate getDate();
 }

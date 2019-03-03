@@ -31,13 +31,13 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
     @Override
     public void run() throws CommandUIArgumentException {
         for (Customer c: environment.getCustomersByName()) {
-            Transaction[] transactions = environment.getTransactions();
+            Transaction[] transactions = environment.getTransactionsByDate();
             String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
             System.out.println("Statement of Account - " + currentDate + "\n");
             System.out.println(c.getFullName() + "\n");
-            System.out.println(c.statementReport(transactions) + "\n");
+            System.out.println(c.statementReport(transactions, environment) + "\n");
             
-            int[] totals = c.receivableReport(transactions);
+            int[] totals = c.receivableReport(transactions,environment);
             TableView table = new TableView(4);
             String[] totalRow = {"Total: ", "", "$", Integer.toString(totals[0])};
             String[] totalPaidRow = {"Total Paid: ", "", "$", Integer.toString(totals[1])};

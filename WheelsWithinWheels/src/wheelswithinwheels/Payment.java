@@ -38,12 +38,16 @@ public class Payment implements Transaction {
     }
 
     @Override
-    public String getReport() {
+    public String getReport(WWWEnvironment environment) {
         //TODO: Should use StringBuilder.
         String report = "";
         report += date + "\t";
         report += "$" + String.valueOf(amount);
         report += customer.shortReport();
         return report;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 }

@@ -9,27 +9,16 @@ package wheelswithinwheels;
  *
  * @author asa
  */
-public class RepairPrice {
+public class RepairPriceEntry {
 
-    String brand;
-    String level;
     int price;
     int repairLength;
 
-    public RepairPrice(String brand, String level, int price, int repairLength) {
-        this.brand = brand;
-        this.level = level;
+    public RepairPriceEntry(int price, int repairLength) {
         this.price = price;
         this.repairLength = repairLength;
     }
 
-    String getBrand() {
-        return brand;
-    }
-
-    String getLevel() {
-        return level;
-    }
 
     public int getPrice() {
         return price;

@@ -14,22 +14,21 @@ import java.util.Map;
  */
 public class RepairPriceTable {
 
-    public static RepairPriceTable shared = new RepairPriceTable();
-    
-    Map<String, Map<String, RepairPrice>> table = new HashMap();
+   
+    Map<String, Map<String, RepairPriceEntry>> table = new HashMap();
     
     RepairPriceTable(){
         
     }
 
-    public RepairPrice getPrice(String brand, String level) {
+    public RepairPriceEntry getPrice(String brand, String level) {
         return table.get(brand).get(level);
     }
 
-    void addPrice(RepairPrice price) {
-        if (table.get(price.brand) == null)
-            table.put(price.brand,new HashMap());
-        table.get(price.brand).put(price.level,price);
+    void addPrice(String brand, String level, RepairPriceEntry entry) {
+        if (table.get(brand) == null)
+            table.put(brand,new HashMap());
+        table.get(brand).put(level,entry);
     }
     
     public String[] getBrands(){

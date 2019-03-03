@@ -23,25 +23,23 @@ public class Order implements Transaction {
     private OrderStatus status;
     private final int orderNumber;
 
-    private static int lastOrderNumber = 0;
     
-    Order(Customer customer, LocalDate orderDate, String brand, String level, String comment){
+    Order(Customer customer, String brand, String level,  LocalDate orderDate, String comment, int orderNumber){
         this.customer = customer;
         this.brand = brand;
         this.level = level;
         this.comment = comment;
         this.orderDate = orderDate;
         this.status = OrderStatus.PENDING;
-        this.orderNumber = ++Order.lastOrderNumber;
-        
+        this.orderNumber = orderNumber;
     }
 
-    RepairPrice getRepairPrice() {
-        return RepairPriceTable.shared.getPrice(brand, level);
+    RepairPriceEntry getRepairPrice(WWWEnvironment environment) {
+        return environment.getRepairPriceTable().getPrice(brand, level);
     }
 
-    LocalDate getPromisedDate() {
-        return orderDate.plusDays(getRepairPrice().getRepairLength());
+    LocalDate getPromisedDate(WWWEnvironment environment) {
+        return orderDate.plusDays(getRepairPrice(environment).getRepairLength());
     }
 
     OrderStatus getStatus(){
@@ -61,7 +59,7 @@ public class Order implements Transaction {
     }
 
     @Override
-    public String getReport() {
+    public String getReport(WWWEnvironment environment) {
         //TODO: Should use StringBuilder.
         String report = "";
         report += orderDate + "\t";
@@ -70,7 +68,7 @@ public class Order implements Transaction {
         report += customer.shortReport();
         report += brand;
         report += level + "; ";
-        report += "due:" + getPromisedDate();
+        report += "due:" + getPromisedDate(environment);
         if (!comment.equals("")) { report += " comment: " + comment; }
         return report;
     }
@@ -100,11 +98,5 @@ public class Order implements Transaction {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public String shortReport() {
-        StringBuilder report = new StringBuilder();
-        report.append("Order #" + orderNumber);
-        report.append(brand + ", " + level);
-        return report.toString();
-    }
 
 }

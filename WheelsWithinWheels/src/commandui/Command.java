@@ -33,10 +33,8 @@ public abstract class Command<Environment> {
         }
     }
     
-    protected LocalDate parseDateArgument(int argPos, String[] args) throws CommandUIArgumentException {
+    protected LocalDate parseDateArgument(int argPos, String[] args,DateTimeFormatter formatter) throws CommandUIArgumentException {
         try {
-            DateTimeFormatter formatter = WWWEnvironment.formatter;
- 
             LocalDate date = LocalDate.parse(args[argPos], formatter);
             return date;
         } catch (Exception e) {
