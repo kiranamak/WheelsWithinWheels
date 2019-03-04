@@ -63,6 +63,6 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
     
     @Override
     public String getHelpText(){
-        return "Display the Repair Price table.";
+        return "Display the Repair Price table."; 
     }
 }

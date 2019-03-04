@@ -20,28 +20,32 @@ public class WWWUI extends CommandUI{
     
     
     public WWWUI(){
+        this(new WWWEnvironment());
+    }
+    
+    public WWWUI(WWWEnvironment environment){
         super();
-        this.environment = new WWWEnvironment();
+        this.environment = environment;
         Command<?>[] commands = new Command<?>[]{
-            new AddCustomerCommand(environment),
-            new AddOrderCommand(environment),
-            new AddPaymentCommand(environment),
-            new AddRepairPriceCommand(environment),
-            new CompleteCommand(environment),
+            new AddCustomerCommand(this.environment),
+            new AddOrderCommand(this.environment),
+            new AddPaymentCommand(this.environment),
+            new AddRepairPriceCommand(this.environment),
+            new CompleteCommand(this.environment),
             new HelpCommand(this),
-            new PrintCustomersCommand(environment,CustomerSort.NUMBER),
-            new PrintCustomersCommand(environment,CustomerSort.NAME),
-            new PrintReciveablesCommand(environment),
-            new PrintRepairPricesCommand(environment),
-            new PrintStatementsCommand(environment),
-            new PrintTransactionsCommand(environment,true,true),
-            new PrintTransactionsCommand(environment,false,true),
-            new PrintTransactionsCommand(environment,true,false),
+            new PrintCustomersCommand(this.environment,CustomerSort.NUMBER),
+            new PrintCustomersCommand(this.environment,CustomerSort.NAME),
+            new PrintReciveablesCommand(this.environment),
+            new PrintRepairPricesCommand(this.environment),
+            new PrintStatementsCommand(this.environment),
+            new PrintTransactionsCommand(this.environment,true,true),
+            new PrintTransactionsCommand(this.environment,false,true),
+            new PrintTransactionsCommand(this.environment,true,false),
             new ReadCommandsCommand(this,true),
             new ReadCommandsCommand(this,false),
-            new ReturnOrderCommand(environment),
-            new TodayCommand(environment),
-            new SaveBikeShopCommand(environment)
+            new ReturnOrderCommand(this.environment),
+            new TodayCommand(this.environment),
+            new SaveBikeShopCommand(this.environment)
         };
         updateCommands(commands);
         System.out.println("Initialized");

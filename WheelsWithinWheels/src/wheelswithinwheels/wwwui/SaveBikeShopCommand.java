@@ -37,7 +37,8 @@ public class SaveBikeShopCommand extends KnownLengthArgumentListCommand<WWWEnvir
         try {
             environment.persistTo(args[0]);
         } catch (Exception ex) {
-            System.out.println("Could not save the bikeshop to the specified file");
+            System.out.println("Could not save the bikeshop to the specified file:\n");
+            throw new RuntimeException(ex);
         }
     }
     

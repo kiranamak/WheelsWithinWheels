@@ -45,7 +45,7 @@ public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnvironment>{
                 customers = environment.getCustomersByNumber();         
         }
         for (Customer customer:customers){
-            System.out.println(customer);
+            System.out.println(customer.shortReport());
         }
         
     }

@@ -9,15 +9,9 @@ package wheelswithinwheels;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.time.LocalDate;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,6 +31,8 @@ public class WWWEnvironment {
 
     private int nextCustomerNumber;
     private int lastOrderNumber;
+    
+    public final String baseSavePath = "saves\\";
 
     public WWWEnvironment(){
         this.nextCustomerNumber = 0;
@@ -49,7 +45,7 @@ public class WWWEnvironment {
 
     }
     
-    
+    /*
     public void makeFile(String file_path, String fileName) throws FileNotFoundException{
         //creates the file
         File file = new File(file_path);
@@ -76,11 +72,11 @@ public class WWWEnvironment {
         }   
         return information;
     }
-    
+    */
     public Order[] getOrders() { 
-        return (Order[]) orders.stream()
+        return orders.stream()
             .filter(Objects::nonNull)
-            .toArray();
+            .toArray(Order[]::new);
     }
 
     public Customer[] getCustomers(){
@@ -105,7 +101,7 @@ public class WWWEnvironment {
     } 
     
     public Payment[] getPayments() { 
-        return (Payment[]) payments.toArray();
+        return payments.stream().toArray(Payment[]::new);
     }
     
     public Transaction[] getTransactions(){
@@ -129,16 +125,24 @@ public class WWWEnvironment {
         customers = new ArrayList<>(customers.size());
         payments = new ArrayList<>(payments.size());
     }
-    public void persistTo(String filename) throws Exception {
-        Stream.of(
-                        Stream.of(getRepairPriceTable()),
-                        Arrays.stream(getCustomers()),
-                        Arrays.stream(getTransactions())
+    public void persistTo(String filename) throws IOException{
+        try (FileWriter writer = new FileWriter(baseSavePath+filename+".txt");){
+            Stream.of(
+                    Stream.of(getRepairPriceTable()),
+                    Arrays.stream(getCustomers()),
+                    Arrays.stream(getTransactions())
                 )
-                .flatMap(s ->s)
+                .flatMap(s->s)
                 .forEach((BikeShopSaveable saveable) -> {
-                    System.out.println(saveable.getSaveText(this));
-                });
+                    try {
+                        writer.write(saveable.getSaveText(this)+"\n");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            );
+        }
+    }
         /*String file_path = "desktop";
         makeFile(file_path, filename+".txt");
         for(String brand: getPricesTable().getBrands()){
@@ -156,7 +160,7 @@ public class WWWEnvironment {
         for(i = 0; i <= getPayments().length; i++){
         saveToFile(getPayments()[i].saveFileText(), file_path + filename, true);
         }*/
-    }
+    
     
     public Order addOrder(Customer customer, String brand, String level, String comment,LocalDate orderDate) {
         int number = ++lastOrderNumber;

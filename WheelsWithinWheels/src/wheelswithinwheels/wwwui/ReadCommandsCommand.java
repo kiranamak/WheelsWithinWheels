@@ -35,13 +35,14 @@ public class ReadCommandsCommand extends KnownLengthArgumentListCommand<WWWUI>{
     @Override
     public void run(String[] args){
         if (reset) environment.environment.reset();
-        WWWUI subUI = new WWWUI();
-        String fileName = args[0];
+        WWWUI subUI = new WWWUI(environment.environment);
+        String fileName = environment.environment.baseSavePath+args[0]+".txt";
         InputStream inStream;
         try {
             inStream = new FileInputStream(fileName);
         } catch (FileNotFoundException ex) {
             System.out.println("Error: File "+fileName+" Not Found");
+            System.out.println(ex.getMessage());
             return;
         }
         subUI.useInputStream(inStream);
