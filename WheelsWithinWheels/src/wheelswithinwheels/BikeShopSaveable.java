@@ -4,14 +4,11 @@
  * and open the template in the editor.
  */
 package wheelswithinwheels;
-import java.time.LocalDate;
 
 /**
  *
  * @author asa
  */
-public interface Transaction extends BikeShopSaveable{
-
-    String getReport(WWWEnvironment environment);
-    LocalDate getDate();
+public interface BikeShopSaveable {
+    public String getSaveText(WWWEnvironment environment);
 }

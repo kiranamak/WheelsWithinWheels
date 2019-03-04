@@ -130,21 +130,32 @@ public class WWWEnvironment {
         payments = new ArrayList<>(payments.size());
     }
     public void persistTo(String filename) throws Exception {
-        //Still working on getting this to work -_- it won't accept "C:\desktop\" due to the backwards slashes "\"
-        String file_path = "desktop";
+        Stream.of(
+                        Stream.of(getRepairPriceTable()),
+                        Arrays.stream(getCustomers()),
+                        Arrays.stream(getTransactions())
+                )
+                .flatMap(s ->s)
+                .forEach((BikeShopSaveable saveable) -> {
+                    System.out.println(saveable.getSaveText(this));
+                });
+        /*String file_path = "desktop";
         makeFile(file_path, filename+".txt");
-        int index = 0;
-        while (index != getCustomersByNumber().length){
-            saveToFile("addc "+getCustomersByNumber()[index].getFirstName()+" "+getCustomersByNumber()[index].getLastName(), file_path + filename, true);
-            index += 1;
+        for(String brand: getPricesTable().getBrands()){
+        for(TuneupLevel level: getPricesTable().getLevels()){
+        saveToFile(getPricesTable().saveFileText(brand, level), file_path + filename, true);
         }
-        /*
-        while (index != getTransactions().length){
-            saveToFile(getTransactions()[index], file_path + filename, true);
-            index += 1;
         }
-        saveToFile(getPricesTable(), file_path + filename, true);
-*/
+        int i = 0;
+        for(i = 0; i <= getCustomersByNumber().length; i++){
+        saveToFile(getCustomersByNumber()[i].saveFileText(), file_path + filename, true);
+        }
+        for(i = 0; i <= getOrders().length; i++){
+        saveToFile(getOrders()[i].saveFileText(), file_path + filename, true);
+        }
+        for(i = 0; i <= getPayments().length; i++){
+        saveToFile(getPayments()[i].saveFileText(), file_path + filename, true);
+        }*/
     }
     
     public Order addOrder(Customer customer, String brand, String level, String comment,LocalDate orderDate) {

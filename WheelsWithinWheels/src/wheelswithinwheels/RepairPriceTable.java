@@ -7,13 +7,14 @@ package wheelswithinwheels;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
  *
  * @author asa
  */
-public class RepairPriceTable {
+public class RepairPriceTable implements BikeShopSaveable{
 
    
     Map<String, Map<String, RepairPriceEntry>> table = new HashMap();
@@ -34,16 +35,30 @@ public class RepairPriceTable {
     }
     
     public String[] getBrands(){
-        return (String[]) table.keySet().toArray();
+        return  table.keySet().stream().toArray(String[]::new);
     }
     
     public String[] getLevels(){
-        return (String[]) table.entrySet().stream()
+        return table.entrySet().stream()
                 .flatMap(
                         (Map.Entry<String,Map<String,RepairPriceEntry>> entry)->
-                                (Stream<String>)((Map) entry.getValue())
-                                        .keySet().stream()
+                                entry.getValue().keySet().stream()
                 )
-                .toArray();
+                .toArray(String[]::new);
+    }
+    
+    @Override
+    public String getSaveText(WWWEnvironment environment){
+        StringBuilder save = new StringBuilder();
+        for(String brand: getBrands()){
+            for(String level: getLevels()){
+                save.append(getSaveTextForEntry(brand, level)).append("\n");
+            }
+        }
+        return save.toString();
+    }
+    
+    protected String getSaveTextForEntry(String brand, String level) {
+        return "addrp "+brand+" "+getPrice(brand, level).price+" "+level+" "+getPrice(brand, level).repairLength;
     }
 }

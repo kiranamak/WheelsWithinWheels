@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author asa
  */
-public class Customer {
+public class Customer implements BikeShopSaveable{
 
     private final String firstName;
     private final String lastName;
@@ -104,6 +104,10 @@ public class Customer {
         report += "(" + customerNumber + ")";
         return report;
     }
-
+    
+    
+    public String getSaveText(WWWEnvironment environment) {
+        return "addc "+getFirstName()+" "+getLastName();
+    }
 
 }

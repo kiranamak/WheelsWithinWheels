@@ -43,7 +43,7 @@ public class Order implements Transaction {
         return orderDate.plusDays(getRepairPrice(environment).getRepairLength());
     }
 
-    OrderStatus getStatus(){
+    public OrderStatus getStatus(){
         return status;
     }
 
@@ -51,11 +51,15 @@ public class Order implements Transaction {
         this.status = status;
     }
 
-    int getOrderNumber() {
+    public int getOrderNumber() {
         return orderNumber;
     }
+    
+    public String getBrand(){
+       return brand;
+    }
 
-    String getRepairLevel() {
+    public String getRepairLevel() {
         return level;
     }
 
@@ -105,6 +109,15 @@ public class Order implements Transaction {
         status = OrderStatus.RETURNED;
         this.returnedDate = date;
     } 
+    
+    @Override
+    public String getSaveText(WWWEnvironment environment){
+        return "addo "+customer.getCustomerNumber()+" "
+                +getDate()+" "
+                +getBrand()+" "
+                +getRepairLevel()+" "
+                +comment;
+    }
     
     
 

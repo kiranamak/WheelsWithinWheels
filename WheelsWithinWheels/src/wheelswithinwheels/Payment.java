@@ -50,4 +50,9 @@ public class Payment implements Transaction {
     public Customer getCustomer() {
         return customer;
     }
+    
+    @Override
+    public String getSaveText(WWWEnvironment environment) {
+        return "addp "+getCustomerNumber()+" "+getDate()+" "+getAmount();
+    }
 }

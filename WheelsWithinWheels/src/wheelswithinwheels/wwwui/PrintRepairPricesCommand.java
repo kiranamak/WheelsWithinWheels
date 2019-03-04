@@ -10,6 +10,10 @@ import commandui.CommandUIArgumentException;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Stream;
 import wheelswithinwheels.RepairPriceEntry;
 import wheelswithinwheels.RepairPriceTable;
@@ -33,23 +37,25 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
     @Override
     public void run() throws CommandUIArgumentException {
         RepairPriceTable pricesTable = environment.getRepairPriceTable();
-        String[] brands = pricesTable.getBrands();
-        String[] levels = pricesTable.getLevels();
-        TableView table = new TableView(levels.length);
-        String[] headers = (String[]) Stream.concat(Stream.of("Prices"),
-                Arrays.stream(levels).map(Object::toString)
-        ).toArray();
+        SortedSet<String> brands = new TreeSet<>(Arrays.asList(pricesTable.getBrands()));
+        SortedSet<String> levels = new TreeSet<>(Arrays.asList(pricesTable.getLevels()));
+        TableView table = new TableView(levels.size() + 1);
+        String[] headers = Stream.concat(Stream.of("Prices"),
+                levels.stream().map(Object::toString)
+        ).toArray(String[]::new);
         try {
             table.addRow(headers);
             for (String brand:brands){
-                Stream rowData = Arrays.stream(levels)
+                Stream<String> rowData = levels.stream()
                                 .map((String level)->pricesTable.getPrice(brand,level))
-                                .map((RepairPriceEntry price)->Integer.toString(price.getPrice()));
-                String[] row = (String[])Stream.concat(Stream.of(brand),rowData).toArray();
-                table.addRow(headers);
+                                .map((RepairPriceEntry price)->
+                                        "$"+Integer.toString(price.getPrice())
+                                        +", "+Integer.toString(price.getRepairLength())+" days");
+                String[] row = Stream.concat(Stream.of(brand),rowData).toArray(String[]::new);
+                table.addRow(row);
             }
         } catch (TableViewWidthOverflowException ex) {
-            throw new RuntimeException();
+            throw new IllegalStateException();
         }
         System.out.print(table);
     }

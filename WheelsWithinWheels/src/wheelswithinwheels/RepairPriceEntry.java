@@ -24,7 +24,7 @@ public class RepairPriceEntry {
         return price;
     }
 
-    int getRepairLength() {
+    public int getRepairLength() {
         return repairLength;
     }
 }
