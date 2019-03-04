@@ -5,6 +5,7 @@
  */
 package wheelswithinwheels.wwwui;
 
+import commandui.HelpCommand;
 import commandui.Command;
 import commandui.CommandUI;
 import wheelswithinwheels.WWWEnvironment;
@@ -23,6 +24,7 @@ public class WWWUI extends CommandUI{
         this.environment = new WWWEnvironment();
         Command<?>[] commands = new Command<?>[]{
             new AddCustomerCommand(environment),
+            new AddOrderCommand(environment),
             new AddPaymentCommand(environment),
             new AddRepairPriceCommand(environment),
             new CompleteCommand(environment),
@@ -31,14 +33,15 @@ public class WWWUI extends CommandUI{
             new PrintCustomersCommand(environment,CustomerSort.NAME),
             new PrintReciveablesCommand(environment),
             new PrintRepairPricesCommand(environment),
-            //new PrintStatementsCommand(environment),
-            //new PrintTransactionsCommand(environment,true,true),
-            //new PrintTransactionsCommand(environment,false,true),
-            //new PrintTransactionsCommand(environment,true,false),
-            //new ReadCommandsCommand(environment),
-            //new RestoreBikeShopCommand(environment),
-            //new ReturnOrderCommand(environment),
-            //new SaveBikeShopCommand(environment)
+            new PrintStatementsCommand(environment),
+            new PrintTransactionsCommand(environment,true,true),
+            new PrintTransactionsCommand(environment,false,true),
+            new PrintTransactionsCommand(environment,true,false),
+            new ReadCommandsCommand(this,true),
+            new ReadCommandsCommand(this,false),
+            new ReturnOrderCommand(environment),
+            new TodayCommand(environment),
+            new SaveBikeShopCommand(environment)
         };
         updateCommands(commands);
         System.out.println("Initialized");

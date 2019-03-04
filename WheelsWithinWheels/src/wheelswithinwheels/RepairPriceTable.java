@@ -7,6 +7,7 @@ package wheelswithinwheels;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  *
@@ -22,6 +23,7 @@ public class RepairPriceTable {
     }
 
     public RepairPriceEntry getPrice(String brand, String level) {
+        if (table.get(brand)==null) return null;
         return table.get(brand).get(level);
     }
 
@@ -32,10 +34,16 @@ public class RepairPriceTable {
     }
     
     public String[] getBrands(){
-        throw new UnsupportedOperationException();
+        return (String[]) table.keySet().toArray();
     }
     
     public String[] getLevels(){
-        throw new UnsupportedOperationException();
+        return (String[]) table.entrySet().stream()
+                .flatMap(
+                        (Map.Entry<String,Map<String,RepairPriceEntry>> entry)->
+                                (Stream<String>)((Map) entry.getValue())
+                                        .keySet().stream()
+                )
+                .toArray();
     }
 }

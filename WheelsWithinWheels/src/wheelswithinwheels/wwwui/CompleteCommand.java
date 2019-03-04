@@ -41,4 +41,14 @@ public class CompleteCommand extends KnownLengthArgumentListCommand<WWWEnvironme
         order.complete(date);
     }
     
+    @Override
+    public String getHelpArguments() {
+        return "<Order Number> <Completion Date>";
+    }
+    
+    @Override
+    public String getHelpText(){
+        return "Complete an order";
+    }
+    
 }

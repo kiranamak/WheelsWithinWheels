@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wheelswithinwheels.wwwui;
+package commandui.tableview;
 
 /**
  *
  * @author asa
  */
-public class RestoreBikeShopCommand {
+public enum HorizontalAlignDirection {
+    LEFT,RIGHT;
     
+    static HorizontalAlignDirection defaultAlign = LEFT;
 }

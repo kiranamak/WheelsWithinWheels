@@ -62,6 +62,7 @@ public class CommandUI {
         System.out.println(welcomeMessage);
         while (running) {
             runPrompt();
+            if (!scanner.hasNext()) running = false;
         }
     }
 
@@ -84,7 +85,7 @@ public class CommandUI {
             }
             command.run(argString);
         } catch (CommandUIArgumentException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         } finally {
             postCommand();
         }

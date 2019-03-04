@@ -42,4 +42,14 @@ public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnviron
         environment.addPayment(customer,date,amount);
     }
     
+    @Override
+    public String getHelpArguments() {
+        return "<Customer Number> <Payment Date> <Payment Amount>";
+    }
+    
+    @Override
+    public String getHelpText(){
+        return "Create a new payment";
+    }
+    
 }

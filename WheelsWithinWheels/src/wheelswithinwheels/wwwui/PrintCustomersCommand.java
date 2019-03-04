@@ -9,6 +9,8 @@ import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
 import wheelswithinwheels.Customer;
 import wheelswithinwheels.WWWEnvironment;
+import static wheelswithinwheels.wwwui.PrintCustomersCommand.CustomerSort.NAME;
+import static wheelswithinwheels.wwwui.PrintCustomersCommand.CustomerSort.NUMBER;
 
 /**
  *
@@ -29,7 +31,7 @@ public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnvironment>{
         switch (sort){
             case NAME:return "printcname";
             case NUMBER:return "printcnum";
-            default:throw new RuntimeException("Extraneous customer sort");
+            default:throw new IllegalStateException("Extraneous customer sort");
         }
     }
 
@@ -48,4 +50,11 @@ public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnvironment>{
         
     }
     
+    
+    @Override
+    public String getHelpText(){
+        return "Display a list of customers, in order by " 
+                + (sort==NAME ? "name" : sort==NUMBER ? "number" : "");
+        //TODO: Should check for additional enum cases without eleinating brevity/clarity
+    }
 }

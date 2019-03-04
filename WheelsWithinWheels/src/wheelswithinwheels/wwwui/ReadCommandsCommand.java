@@ -48,4 +48,15 @@ public class ReadCommandsCommand extends KnownLengthArgumentListCommand<WWWUI>{
         subUI.run();
     }
     
+    @Override
+    public String getHelpArguments() {
+        return "<File Name>";
+    }
+    
+    @Override
+    public String getHelpText(){
+        if (reset) return "Restores the Bike Shop from a save file";
+        return "Reads and executes the commands found in a file";
+    }
+    
 }

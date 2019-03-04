@@ -35,24 +35,25 @@ public class WheelsWithinWheels {
 
     }
 
-    public static void sampleTableView() {
-        try {
-            TableView tv = new TableView(3);
-            String[] row = {"foo", "bar", "baz"};
-            tv.addRow(row);
-            String[] row2 = {"f", "bs", "sdkkdjksjkjsd"};
-            tv.addRow(row2);
-            tv.addColumns(2);
-            String[] row3 = {"fred", "", "", "", "joe"};
-            tv.addRow(row3);
-            System.out.println(tv);
-
-            System.out.println("done");
-        } catch (TableViewWidthOverflowException e) {
-            System.out.println(e);
-        }
+    /*public static void sampleTableView() {
+    try {
+    TableView tv = new TableView(3);
+    String[] row = {"foo", "bar", "baz"};
+    tv.addRow(row);
+    String[] row2 = {"f", "bs", "sdkkdjksjkjsd"};
+    tv.addRow(row2);
+    tv.addColumns(2);
+    String[] row3 = {"fred", "", "", "", "joe"};
+    tv.addRow(row3);
+    System.out.println(tv);
+    
+    System.out.println("done");
+    } catch (TableViewWidthOverflowException e) {
+    System.out.println(e);
     }
-
+    }*/
+    
+    
     static class FWETestModel implements FieldwiseEditable {
 
         String a = "";

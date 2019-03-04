@@ -38,10 +38,21 @@ public class AddOrderCommand extends KnownLengthArgumentListCommand<WWWEnvironme
     @Override
     public void run(String[] args) throws CommandUIArgumentException{
         super.run(args);
+        //TODO: Allow for comments over one word
         int customerNumber = parseIntArgument(0, args);
         Customer customer = environment.getCustomer(customerNumber);
         LocalDate date = parseDateArgument(1, args,environment.dateFormatter);
         checkRepairPrice(args[2], args[3]);
         environment.addOrder(customer, args[2], args[3], args[4], date);
+    }
+    
+    @Override
+    public String getHelpArguments() {
+        return "<Customer Number> <Order Date> <Bike Brand> <Tuneup Level> <Comment>";
+    }
+    
+    @Override
+    public String getHelpText(){
+        return "Create a new order";
     }
 }

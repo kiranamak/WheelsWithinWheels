@@ -45,4 +45,8 @@ public abstract class Command<Environment> {
     public String getHelpText() {
         return "No help text provided.";
     }
+
+    public String getHelpArguments() {
+        return "";
+    }
 }

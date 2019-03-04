@@ -36,4 +36,14 @@ public class AddCustomerCommand extends KnownLengthArgumentListCommand<WWWEnviro
         Customer addedCustomer = environment.addCustomer(args[0], args[1]);
         System.out.println("Added Customer #"+Integer.toString(addedCustomer.getCustomerNumber()));
     }
+   
+    @Override
+    public String getHelpArguments() {
+        return "<First Name> <Last Name>";
+    }
+    
+    @Override
+    public String getHelpText(){
+        return "Create a new customer";
+    }
 }

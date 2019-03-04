@@ -18,8 +18,9 @@ public class Order implements Transaction {
     private final String brand;
     private final String level;
     private final String comment;
-    private final LocalDate orderDate;
-    private final LocalDate completeDate = null;
+    private LocalDate orderDate;
+    private LocalDate completeDate = null;
+    private LocalDate returnedDate = null;
     private OrderStatus status;
     private final int orderNumber;
 
@@ -94,9 +95,17 @@ public class Order implements Transaction {
         return orderDate;
     }
 
-    public void complete(LocalDate date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+      public void complete(LocalDate date) {
+        status = OrderStatus.COMPLETED;
+        this.completeDate = date;
     }
+    
+    public void returned(LocalDate date) {
+        status = OrderStatus.RETURNED;
+        this.returnedDate = date;
+    } 
+    
     
 
 }

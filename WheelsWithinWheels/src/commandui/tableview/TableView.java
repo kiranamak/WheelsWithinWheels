@@ -5,6 +5,7 @@
  */
 package commandui.tableview;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -15,17 +16,18 @@ import java.util.stream.Stream;
  */
 public class TableView {
 
-    ArrayList<ArrayList<String>> columns;
+    List<List<String>> columns;
     int width;
     String columnDelimiter = "  ";
-
-    public static int startingDepth = 4;
+    List<HorizontalAlignDirection> horizontalAlignDirections;
 
     public TableView(int width) {
         columns = new ArrayList<>(width);
         this.width = width;
+        this.horizontalAlignDirections = new ArrayList<>(width);
         for (int i = 0; i < width; i++) {
             columns.add(new ArrayList<>());
+            horizontalAlignDirections.add(HorizontalAlignDirection.defaultAlign);
         }
     }
 
@@ -39,35 +41,23 @@ public class TableView {
     }
     
     public void addRow(Object[] row) throws TableViewWidthOverflowException{
-        addRow(Arrays.stream(row).map(Object::toString).toArray());
-    }
-    
-    
-    public void addColumns(int cols) {
-        for (int i = 0; i < cols; i++) {
-            ArrayList<String> col = new ArrayList<String>();
-            for (int j = 0; j < maxHeight(); j++) {
-                col.add("");
-            }
-            columns.add(col);
-        }
-        width += cols;
+        addRow((String[]) Arrays.stream(row).map(Object::toString).toArray());
     }
 
     @Override
     public String toString() {
-        int[] widths = widths();
-        StringBuffer result = new StringBuffer();
+        int[] widths = cellWidths();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < maxHeight(); i++) {
             for (int j = 0; j < columns.size(); j++) {
-                ArrayList<String> column = columns.get(j);
+                List<String> column = columns.get(j);
                 String cell;
                 try {
                     cell = column.get(i);
                 } catch (IndexOutOfBoundsException e) {
                     cell = "";
                 }
-                result.append(paddedCell(cell, widths[j], false));
+                result.append(paddedCell(cell, widths[j], horizontalAlignDirections.get(j)));
                 result.append(columnDelimiter);
             }
             result.append("\n");
@@ -75,27 +65,8 @@ public class TableView {
         return result.toString();
     }
     
-    public String toStringFormatted(Boolean[] right) {
-        int[] widths = widths();
-        StringBuffer result = new StringBuffer();
-        for (int i = 0; i < maxHeight(); i++) {
-            for (int j = 0; j < columns.size(); j++) {
-                ArrayList<String> column = columns.get(j);
-                String cell;
-                try {
-                    cell = column.get(i);
-                } catch (IndexOutOfBoundsException e) {
-                    cell = "";
-                }
-                result.append(paddedCell(cell, widths[j], right[j]));
-                result.append(columnDelimiter);
-            }
-            result.append("\n");
-        }
-        return result.toString();
-    }
 
-    private int[] widths() {
+    private int[] cellWidths() {
         int[] widths = new int[width];
         for (int i = 0; i < widths.length; i++) {
             widths[i] = columns.get(i).stream()
@@ -106,10 +77,10 @@ public class TableView {
         return widths;
     }
 
-    private String paddedCell(String cell, int width, boolean right) {
+    protected String paddedCell(String cell, int width, HorizontalAlignDirection horizontalAlignDirection) {
         StringBuffer result = new StringBuffer(cell);
         while (result.length() < width) {
-            if (right) {
+            if (horizontalAlignDirection == HorizontalAlignDirection.RIGHT) {
                 result.insert(0, " ");
             } else {
                 result.append(" ");
@@ -118,11 +89,18 @@ public class TableView {
         return result.toString();
     }
 
-    private int maxHeight() {
-        return Stream.of(columns)
-                .mapToInt(ArrayList::size)
-                .max()
-                .orElse(0);
+    protected int maxHeight() {
+        return columns.get(0).size();
+        //TODO:Should check for no colmumns.
+    }
+
+    public void horizontalAlign(List<HorizontalAlignDirection> format) {
+        this.horizontalAlignDirections = format;
+        //TODO: Must check for width mismatch
+    }
+    
+    public void horizontalAlign(HorizontalAlignDirection... format){
+        horizontalAlign(Arrays.asList(format));
     }
 
 

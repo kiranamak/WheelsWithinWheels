@@ -7,6 +7,9 @@ package wheelswithinwheels.wwwui;
 import wheelswithinwheels.WWWEnvironment;
 import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
+import commandui.tableview.HorizontalAlignDirection;
+import static commandui.tableview.HorizontalAlignDirection.LEFT;
+import static commandui.tableview.HorizontalAlignDirection.RIGHT;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 import java.time.LocalDate;
@@ -42,8 +45,9 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
             String[] totalRow = {"Total: ", "", "$", Integer.toString(totals[0])};
             String[] totalPaidRow = {"Total Paid: ", "", "$", Integer.toString(totals[1])};
             String[] totalDueRow = {"Total Due: ", "", "$", Integer.toString(totals[2])};
-            Boolean[] format = {false, false, false, true};
-            System.out.println(table.toStringFormatted(format) + "\n");
+            HorizontalAlignDirection[] format = {LEFT, LEFT, LEFT, RIGHT};
+            table.horizontalAlign(format);
+            System.out.println(table.toString() + "\n");
             
             if (totals[2] != 0) {
                 System.out.println("Please make payments within the week");
@@ -51,6 +55,11 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
             
             System.out.println("THANK YOU FOR CHOOSING WHEELS WITHIN WHEELS BIKE SHOP!");
         }
+    }
+    
+    @Override
+    public String getHelpText(){
+        return "Display statements for each customer.";
     }
 
 }

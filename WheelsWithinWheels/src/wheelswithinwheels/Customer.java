@@ -5,6 +5,8 @@
  */
 package wheelswithinwheels;
 
+import commandui.tableview.HorizontalAlignDirection;
+import static commandui.tableview.HorizontalAlignDirection.*;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 import java.time.LocalDate;
@@ -19,15 +21,10 @@ public class Customer {
     private final String firstName;
     private final String lastName;
     private final int customerNumber;
-    private OrderStatus status;
-    private LocalDate dateCompleted;
-    private LocalDate dateReturned;
-    
     Customer(String firstName, String lastName, int customerNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.customerNumber = customerNumber;
-        status = OrderStatus.PENDING;
     }
 
     public String getFirstName() {
@@ -47,16 +44,7 @@ public class Customer {
     }
     
 
-    public void complete(LocalDate date) {
-        status = OrderStatus.COMPLETED;
-        this.dateCompleted = date;
-    }
-    
-    public void returned(LocalDate date) {
-        status = OrderStatus.RETURNED;
-        this.dateReturned = date;
-    } 
-    
+  
     private int[] receivable(Transaction[] transactions,WWWEnvironment environment) {
         //TODO: Should use class, not array
         int amountReceivable = 0;
@@ -104,8 +92,9 @@ public class Customer {
         } catch (TableViewWidthOverflowException ex) {
                 throw new RuntimeException("Somehow help table has incorrect width.");
         }
-        Boolean[] format = {false, false, true, true};
-        return table.toStringFormatted(format);
+        HorizontalAlignDirection[] format = {LEFT, LEFT, RIGHT, RIGHT};
+        table.horizontalAlign(format);
+        return table.toString();
     }
     
     public String shortReport() {

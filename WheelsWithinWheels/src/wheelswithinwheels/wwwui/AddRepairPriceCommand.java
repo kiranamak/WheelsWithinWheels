@@ -48,4 +48,14 @@ public class AddRepairPriceCommand extends KnownLengthArgumentListCommand<WWWEnv
         checkRepairPrice(brand, level);
         environment.addRepairPrice(brand,level,price,days);
     }
+    
+    @Override
+    public String getHelpArguments() {
+        return "<Brand> <Level> <Price> <Days to Return>";
+    }
+    
+    @Override
+    public String getHelpText(){
+        return "Create a new repair price table entry";
+    }
 }

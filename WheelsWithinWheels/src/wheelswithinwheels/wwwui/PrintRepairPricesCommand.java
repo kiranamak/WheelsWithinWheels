@@ -54,4 +54,9 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
         System.out.print(table);
     }
     
+    
+    @Override
+    public String getHelpText(){
+        return "Display the Repair Price table.";
+    }
 }

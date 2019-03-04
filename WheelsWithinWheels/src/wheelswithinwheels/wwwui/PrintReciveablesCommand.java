@@ -7,6 +7,9 @@ package wheelswithinwheels.wwwui;
 
 import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
+import commandui.tableview.HorizontalAlignDirection;
+import static commandui.tableview.HorizontalAlignDirection.LEFT;
+import static commandui.tableview.HorizontalAlignDirection.RIGHT;
 import commandui.tableview.TableView;
 import commandui.tableview.TableViewWidthOverflowException;
 import java.util.logging.Level;
@@ -49,11 +52,19 @@ public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment>
         } catch (TableViewWidthOverflowException ex) {
                 throw new RuntimeException("Somehow help table has incorrect width.");
         }
-        Boolean[] format = {true, false, true, true, true};
         System.out.println("Total Amount Receivable: $" + totalReceivable);
         System.out.println("Total Amount Paid: $" + totalPaid);
         System.out.println("Total Amount Outstanding: $" + totalOutstanding);
-        System.out.println(table.toStringFormatted(format));
+        HorizontalAlignDirection[] format = {RIGHT,LEFT, RIGHT, RIGHT, RIGHT};
+        table.horizontalAlign(format);
+        System.out.println(table.toString());
+    }
+    
+    
+    
+    @Override
+    public String getHelpText(){
+        return "Display a report of all accounts revievable";
     }
     
 }
