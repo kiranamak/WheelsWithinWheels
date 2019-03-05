@@ -11,14 +11,10 @@ package wheelswithinwheels;
  */
 public class RepairPriceEntry implements BikeShopSaveable {
 
-    String brand;
-    String level;
     int price;
     int repairLength;
 
-    public RepairPriceEntry(String brand, String level, int price, int repairLength) {
-        this.brand = brand;
-        this.level = level;
+    public RepairPriceEntry(int price, int repairLength) {
         this.price = price;
         this.repairLength = repairLength;
     }
@@ -28,20 +24,12 @@ public class RepairPriceEntry implements BikeShopSaveable {
         return price;
     }
     
-    public String getBrand() {
-        return brand;
-    }
-    
-    public String getLevel() {
-        return level;
-    }
-
     public int getRepairLength() {
         return repairLength;
     }
     
     @Override
     public String getSaveText(WWWEnvironment environment) {
-        return "addrp " + brand + " " + level + " " + price + " " + repairLength;
+        return "addrp " + price + " " + repairLength;
     }
 }
