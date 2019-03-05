@@ -95,8 +95,10 @@ public class TableView {
     }
 
     public void horizontalAlign(List<HorizontalAlignDirection> format) {
+        if (format.size() != width) {
+            throw new IllegalStateException("Somehow table format align has incorrect width.");
+        }
         this.horizontalAlignDirections = format;
-        //TODO: Must check for width mismatch
     }
     
     public void horizontalAlign(HorizontalAlignDirection... format){

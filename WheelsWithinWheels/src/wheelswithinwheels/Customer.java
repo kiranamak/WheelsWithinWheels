@@ -45,8 +45,7 @@ public class Customer implements BikeShopSaveable{
     
 
   
-    private int[] receivable(Transaction[] transactions,WWWEnvironment environment) {
-        //TODO: Should use class, not array
+    public Receivable receivableReport(Transaction[] transactions,WWWEnvironment environment) {
         int amountReceivable = 0;
         int amountPaid = 0;
         
@@ -57,29 +56,22 @@ public class Customer implements BikeShopSaveable{
                 amountPaid += ((Payment) transaction).getAmount();
             }
         }
-        int[] report = {amountReceivable, amountPaid};
-        return report;
+        return new Receivable(amountReceivable, amountPaid);
     }
     
-    public int[] receivableReport(Transaction[] transactions,WWWEnvironment environment) {
-        int[] data = receivable(transactions,environment);
-        int outstanding = data[0] - data[1];
-        int[] report = {data[0], data[1], outstanding};
-        return report;
-    }
     
-    public String statementReport(Transaction[] transactions,WWWEnvironment environement) {
+    public String statementReport(Transaction[] transactions,WWWEnvironment environment) {
         TableView table = new TableView(4);
         String filler = "---";
         String[] columnHeader = {"Date", "Description", "Amount", "Paid"};
         try {
+            table.addRow(columnHeader);
             for (Transaction t: transactions) {
-                table.addRow(columnHeader);
                 String date = t.getDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
                 String description = "";
                 if(t instanceof Order) {
                     description = ((Order) t).shortReport();
-                    int amount = ((Order) t).getRepairPrice(environement).getPrice();
+                    int amount = ((Order) t).getRepairPrice(environment).getPrice();
                     String[] row = {date, description, Integer.toString(amount), filler};
                     table.addRow(row);
                 } else {
@@ -90,7 +82,7 @@ public class Customer implements BikeShopSaveable{
                 }
             }
         } catch (TableViewWidthOverflowException ex) {
-                throw new RuntimeException("Somehow help table has incorrect width.");
+                throw new RuntimeException("Somehow statments table has incorrect width.");
         }
         HorizontalAlignDirection[] format = {LEFT, LEFT, RIGHT, RIGHT};
         table.horizontalAlign(format);
@@ -106,6 +98,7 @@ public class Customer implements BikeShopSaveable{
     }
     
     
+    @Override
     public String getSaveText(WWWEnvironment environment) {
         return "addc "+getFirstName()+" "+getLastName();
     }

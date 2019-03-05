@@ -15,6 +15,7 @@ import commandui.tableview.TableViewWidthOverflowException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import wheelswithinwheels.Customer;
+import wheelswithinwheels.Receivable;
 import wheelswithinwheels.Transaction;
 
 /**
@@ -31,28 +32,52 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
         return "prints";
     }
     
-    @Override
-    public void run() throws CommandUIArgumentException {
-        for (Customer c: environment.getCustomersByName()) {
-            Transaction[] transactions = environment.getTransactionsByDate();
-            String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-            System.out.println("Statement of Account - " + currentDate + "\n");
-            System.out.println(c.getFullName() + "\n");
-            System.out.println(c.statementReport(transactions, environment) + "\n");
-            
-            int[] totals = c.receivableReport(transactions,environment);
-            TableView table = new TableView(4);
-            String[] totalRow = {"Total: ", "", "$", Integer.toString(totals[0])};
-            String[] totalPaidRow = {"Total Paid: ", "", "$", Integer.toString(totals[1])};
-            String[] totalDueRow = {"Total Due: ", "", "$", Integer.toString(totals[2])};
+    private void statementHeader(Customer c, Transaction[] transactions, String dashedLine) {
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        System.out.println("Wheels Within Wheels Bike Shop\nTed Smith\n57 Lambert Rd\n111-111-1111");
+        System.out.println(dashedLine);
+        System.out.println("Statement of Account - " + currentDate + "\n");
+        System.out.println(c.getFullName() + "\n");
+        System.out.println(c.statementReport(transactions, environment) + "\n");
+        System.out.println(dashedLine);
+    }
+    
+    private void totalsTable(Receivable receivable){
+        TableView table = new TableView(4);
+        try {
+            String[] totalRow = {"Total: ", "", "$", Integer.toString(receivable.getReceivable())};
+            String[] totalPaidRow = {"Total Paid: ", "", "$", Integer.toString(receivable.getPaid())};
+            String[] totalDueRow = {"Total Due: ", "", "$", Integer.toString(receivable.getOutstanding())};
             HorizontalAlignDirection[] format = {LEFT, LEFT, LEFT, RIGHT};
             table.horizontalAlign(format);
-            System.out.println(table.toString() + "\n");
             
-            if (totals[2] != 0) {
+            table.addRow(totalRow);
+            table.addRow(totalPaidRow);
+            table.addRow(totalDueRow);
+            System.out.println(table.toString() + "\n");
+        } catch (TableViewWidthOverflowException e) {
+            throw new IllegalStateException("Somehow statement totals table has incorrect width.");
+        }
+    }
+    
+    @Override
+    public void run() throws CommandUIArgumentException {
+        int dashedLineLength = 100;
+        String dashedLine = new String(new char[dashedLineLength]).replace('\0', '-');
+        
+        for (Customer c: environment.getCustomersByName()) {
+            Transaction[] transactions = environment.getTransactionsByDate();
+            statementHeader(c, transactions, dashedLine);
+            
+            
+            Receivable totals = c.receivableReport(transactions, environment);
+            totalsTable(totals);
+            
+            if (totals.getOutstanding() != 0) {
+                System.out.println(dashedLine);
                 System.out.println("Please make payments within the week");
             }
-            
+            System.out.println(dashedLine);
             System.out.println("THANK YOU FOR CHOOSING WHEELS WITHIN WHEELS BIKE SHOP!");
         }
     }

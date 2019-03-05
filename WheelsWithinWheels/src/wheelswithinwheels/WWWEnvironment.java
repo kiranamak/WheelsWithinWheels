@@ -178,8 +178,8 @@ public class WWWEnvironment {
         return payment;
     }
     
-    public void addRepairPrice(String brand,String level,int returnTime,int price) {
-        repairPriceTable.addPrice(brand,level,new RepairPriceEntry(returnTime,price));
+    public void addRepairPrice(String brand,String level,int price,int returnTime) {
+        repairPriceTable.addPrice(brand,level,new RepairPriceEntry(brand, level, price, returnTime));
     }
     
     public Customer addCustomer(String firstName, String lastName) {

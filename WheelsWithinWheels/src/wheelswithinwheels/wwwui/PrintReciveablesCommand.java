@@ -15,6 +15,7 @@ import commandui.tableview.TableViewWidthOverflowException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import wheelswithinwheels.Customer;
+import wheelswithinwheels.Receivable;
 import wheelswithinwheels.WWWEnvironment;
 
 /**
@@ -42,15 +43,16 @@ public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment>
         try {
             table.addRow(columnHeader);
             for(Customer c: environment.getCustomersByName()) {
-                int[] data = c.receivableReport(environment.getTransactionsByDate(),environment);
-                String[] report = {Integer.toString(c.getCustomerNumber()), c.getFullName(), "$" + Integer.toString(data[0]), "$" + Integer.toString(data[1]), "$" + Integer.toString(data[2])};
+                Receivable data = c.receivableReport(environment.getTransactionsByDate(),environment);
+                String[] report = {Integer.toString(c.getCustomerNumber()), c.getFullName(), "$" + Integer.toString(data.getReceivable()), "$" + Integer.toString(data.getPaid()), "$" + Integer.toString(data.getOutstanding())};
                 table.addRow(report);
-                totalReceivable += data[0];
-                totalPaid += data[1];
-                totalOutstanding += data[2];
+                
+                totalReceivable += data.getReceivable();
+                totalPaid += data.getPaid();
+                totalOutstanding += data.getOutstanding();
             }   
         } catch (TableViewWidthOverflowException ex) {
-                throw new RuntimeException("Somehow help table has incorrect width.");
+                throw new RuntimeException("Somehow receivables table has incorrect width.");
         }
         System.out.println("Total Amount Receivable: $" + totalReceivable);
         System.out.println("Total Amount Paid: $" + totalPaid);
