@@ -4,29 +4,29 @@
  * and open the template in the editor.
  */
 package wheelswithinwheels.wwwui;
+import commandui.ArgumentedCommand;
 import commandui.CommandUIArgumentException;
-import commandui.KnownLengthArgumentListCommand;
 import wheelswithinwheels.Customer;
 import wheelswithinwheels.WWWEnvironment;
 import java.time.LocalDate;
+import java.util.Arrays;
 import wheelswithinwheels.RepairPriceTable;
 /**
  *
  * @author kmak
  */
-public class AddOrderCommand extends KnownLengthArgumentListCommand<WWWEnvironment> {
+public class AddOrderCommand extends ArgumentedCommand<WWWEnvironment> {
     public AddOrderCommand(WWWEnvironment environment) {
         super(environment);
     }
 
     @Override
-    public int argumentCount() {
-        return 5;
-    }
-
-    @Override
     public String getName() {
         return "addo";
+    }
+    
+    public int argumentCountMinimum() {
+        return 5;
     }
     
     private void checkRepairPrice(String brand, String level) throws CommandUIArgumentException {
@@ -37,13 +37,18 @@ public class AddOrderCommand extends KnownLengthArgumentListCommand<WWWEnvironme
 
     @Override
     public void run(String[] args) throws CommandUIArgumentException{
-        super.run(args);
-        //TODO: Allow for comments over one word
+        if (args.length != argumentCountMinimum()) {
+            throw new CommandUIArgumentException(argumentCountMinimum(), args.length);
+        }
+        
         int customerNumber = parseIntArgument(0, args);
         Customer customer = environment.getCustomer(customerNumber);
-        LocalDate date = parseDateArgument(1, args,environment.dateFormatter);
+        LocalDate date = parseDateArgument(1, args, environment.dateFormatter);
         checkRepairPrice(args[2], args[3]);
-        environment.addOrder(customer, args[2], args[3], args[4], date);
+        String[] commentArray = Arrays.copyOfRange(args, 4, args.length);
+        String comment = Arrays.toString(commentArray);
+        
+        environment.addOrder(customer, args[2], args[3], date, comment);
     }
     
     @Override

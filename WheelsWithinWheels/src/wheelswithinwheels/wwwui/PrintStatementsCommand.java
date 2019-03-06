@@ -32,17 +32,21 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
         return "prints";
     }
     
-    private void statementHeader(Customer c, Transaction[] transactions, String dashedLine) {
+    private String statementHeader(Customer c, Transaction[] transactions, String dashedLine) {
+        String header = "";
+        
         String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        System.out.println("Wheels Within Wheels Bike Shop\nTed Smith\n57 Lambert Rd\n111-111-1111");
-        System.out.println(dashedLine);
-        System.out.println("Statement of Account - " + currentDate + "\n");
-        System.out.println(c.getFullName() + "\n");
-        System.out.println(c.statementReport(transactions, environment) + "\n");
-        System.out.println(dashedLine);
+        header += "Wheels Within Wheels Bike Shop\nTed Smith\n57 Lambert Rd\n111-111-1111\n\n"
+            + dashedLine + "\n"
+            + "Statement of Account - " + currentDate + "\n\n"
+            + c.getFullName() + "\n\n"
+            + c.statementReport(transactions, environment) + "\n\n"
+            + dashedLine + "\n";
+        
+        return header;
     }
     
-    private void totalsTable(Receivable receivable){
+    private String totalsTable(Receivable receivable){
         TableView table = new TableView(4);
         try {
             String[] totalRow = {"Total: ", "", "$", Integer.toString(receivable.getReceivable())};
@@ -54,7 +58,7 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
             table.addRow(totalRow);
             table.addRow(totalPaidRow);
             table.addRow(totalDueRow);
-            System.out.println(table.toString() + "\n");
+            return table.toString() + "\n\n";
         } catch (TableViewWidthOverflowException e) {
             throw new IllegalStateException("Somehow statement totals table has incorrect width.");
         }
@@ -62,24 +66,32 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
     
     @Override
     public void run() throws CommandUIArgumentException {
+        System.out.println(getStatements());
+    }
+    
+    public String getStatements() {
+        String statements = "";
+        
         int dashedLineLength = 100;
         String dashedLine = new String(new char[dashedLineLength]).replace('\0', '-');
         
         for (Customer c: environment.getCustomersByName()) {
             Transaction[] transactions = environment.getTransactionsByDate();
-            statementHeader(c, transactions, dashedLine);
+            statements += statementHeader(c, transactions, dashedLine);
             
             
             Receivable totals = c.receivableReport(transactions, environment);
-            totalsTable(totals);
+            statements += totalsTable(totals);
             
             if (totals.getOutstanding() != 0) {
-                System.out.println(dashedLine);
-                System.out.println("Please make payments within the week");
+                statements += dashedLine + "\n"
+                    + "Please make payments within the week";
             }
-            System.out.println(dashedLine);
-            System.out.println("THANK YOU FOR CHOOSING WHEELS WITHIN WHEELS BIKE SHOP!");
+            statements += dashedLine + "\n"
+                + "THANK YOU FOR CHOOSING WHEELS WITHIN WHEELS BIKE SHOP!\n"
+                + dashedLine + "\n";
         }
+        return statements;
     }
     
     @Override

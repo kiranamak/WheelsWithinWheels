@@ -18,7 +18,7 @@ public class Order implements Transaction {
     private final String brand;
     private final String level;
     private final String comment;
-    private LocalDate orderDate;
+    private final LocalDate orderDate;
     private LocalDate completeDate = null;
     private LocalDate returnedDate = null;
     private OrderStatus status;
@@ -112,7 +112,8 @@ public class Order implements Transaction {
     
     @Override
     public String getSaveText(WWWEnvironment environment){
-        return "addo "+customer.getCustomerNumber()+" "
+        return "rnon " + getOrderNumber() + "\n" +
+                "addo "+customer.getCustomerNumber()+" "
                 +getDate()+" "
                 +getBrand()+" "
                 +getRepairLevel()+" "

@@ -49,4 +49,8 @@ public abstract class Command<Environment> {
     public String getHelpArguments() {
         return "";
     }
+    
+    public boolean inHelpList() {
+        return true;
+    }
 }

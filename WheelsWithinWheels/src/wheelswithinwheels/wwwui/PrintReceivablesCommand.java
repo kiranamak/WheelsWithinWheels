@@ -22,9 +22,9 @@ import wheelswithinwheels.WWWEnvironment;
  *
  * @author asa
  */
-public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment> {
+public class PrintReceivablesCommand extends ArgumentlessCommand<WWWEnvironment> {
 
-    public PrintReciveablesCommand(WWWEnvironment environment) {
+    public PrintReceivablesCommand(WWWEnvironment environment) {
         super(environment);
     }
 
@@ -35,11 +35,19 @@ public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment>
 
     @Override
     public void run() throws CommandUIArgumentException {
+        System.out.println(getReceivables());
+    }
+    
+    public String getReceivables() {
+        String receivables = "";
+        
         TableView table = new TableView(5);
         int totalReceivable = 0;
         int totalPaid = 0;
         int totalOutstanding = 0;
+        
         String[] columnHeader = {"#", "Name", "Receivable", "Paid", "Outstanding"};
+        
         try {
             table.addRow(columnHeader);
             for(Customer c: environment.getCustomersByName()) {
@@ -54,15 +62,17 @@ public class PrintReciveablesCommand extends ArgumentlessCommand<WWWEnvironment>
         } catch (TableViewWidthOverflowException ex) {
                 throw new RuntimeException("Somehow receivables table has incorrect width.");
         }
-        System.out.println("Total Amount Receivable: $" + totalReceivable);
-        System.out.println("Total Amount Paid: $" + totalPaid);
-        System.out.println("Total Amount Outstanding: $" + totalOutstanding);
+        
+        receivables += "Total Amount Receivable: $" + totalReceivable + "\n"
+            + "Total Amount Paid: $" + totalPaid + "\n"
+            + "Total Amount Outstanding: $" + totalOutstanding + "\n";
+        
         HorizontalAlignDirection[] format = {RIGHT,LEFT, RIGHT, RIGHT, RIGHT};
         table.horizontalAlign(format);
-        System.out.println(table.toString());
+        receivables += table.toString() + "\n";
+        
+        return receivables;
     }
-    
-    
     
     @Override
     public String getHelpText(){

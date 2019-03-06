@@ -35,7 +35,7 @@ public class WWWUI extends CommandUI{
             new HelpCommand(this),
             new PrintCustomersCommand(this.environment,CustomerSort.NUMBER),
             new PrintCustomersCommand(this.environment,CustomerSort.NAME),
-            new PrintReciveablesCommand(this.environment),
+            new PrintReceivablesCommand(this.environment),
             new PrintRepairPricesCommand(this.environment),
             new PrintStatementsCommand(this.environment),
             new PrintTransactionsCommand(this.environment,true,true),
@@ -45,7 +45,9 @@ public class WWWUI extends CommandUI{
             new ReadCommandsCommand(this,false),
             new ReturnOrderCommand(this.environment),
             new TodayCommand(this.environment),
-            new SaveBikeShopCommand(this.environment)
+            new SaveBikeShopCommand(this.environment),
+            new SetNextCustomerNumberCommand(this.environment),
+            new SetNextOrderNumberCommand(this.environment)
         };
         updateCommands(commands);
         System.out.println("Initialized");

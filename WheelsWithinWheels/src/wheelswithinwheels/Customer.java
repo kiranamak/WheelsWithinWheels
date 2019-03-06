@@ -100,7 +100,8 @@ public class Customer implements BikeShopSaveable{
     
     @Override
     public String getSaveText(WWWEnvironment environment) {
-        return "addc "+getFirstName()+" "+getLastName();
+        return "rncn " + getCustomerNumber() + "\n" 
+                + "addc "+getFirstName()+" "+getLastName();
     }
     
     

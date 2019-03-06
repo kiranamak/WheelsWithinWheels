@@ -36,7 +36,7 @@ public class ReturnOrderCommand extends KnownLengthArgumentListCommand<WWWEnviro
         super.run(args);
         int orderNumber = parseIntArgument(0,args);
         Order order = environment.getOrder(orderNumber);
-        order.returned(parseDateArgument(1,args,environment.dateFormatter));
+        order.returned(parseDateArgument(1,args, environment.dateFormatter));
     }
     
     @Override

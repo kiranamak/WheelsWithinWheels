@@ -37,7 +37,7 @@ public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnviron
         super.run(args);
         int customerNumber = parseIntArgument(0,args);
         Customer customer = environment.getCustomer(customerNumber);
-        LocalDate date = parseDateArgument(1, args,environment.dateFormatter);
+        LocalDate date = parseDateArgument(1, args, environment.dateFormatter);
         int amount = parseIntArgument(2,args);
         environment.addPayment(customer,date,amount);
     }

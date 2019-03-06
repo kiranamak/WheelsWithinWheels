@@ -32,13 +32,15 @@ public class HelpCommand extends ArgumentlessCommand<CommandUI>{
     public void run() throws CommandUIArgumentException {
         TableView helpMessages = new TableView(2);
         for (Command command: environment.getCommands()){
-            try {
-                helpMessages.addRow(new String[]{
-                    command.getName()+" "+command.getHelpArguments(),
-                    command.getHelpText()
-                });
-            } catch (TableViewWidthOverflowException ex) {
-                throw new IllegalStateException("Somehow help table has incorrect width.");
+            if (command.inHelpList()) {
+                try {
+                    helpMessages.addRow(new String[]{
+                        command.getName()+" "+command.getHelpArguments(),
+                        command.getHelpText()
+                    });
+                } catch (TableViewWidthOverflowException ex) {
+                    throw new IllegalStateException("Somehow help table has incorrect width.");
+                }
             }
         }
         System.out.println(helpMessages.toString());

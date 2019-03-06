@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
+import wheelswithinwheels.wwwui.PrintReceivablesCommand;
+import wheelswithinwheels.wwwui.PrintStatementsCommand;
 
 /**
  *
@@ -30,13 +32,13 @@ public class WWWEnvironment {
     private List<Payment> payments;
 
     private int nextCustomerNumber;
-    private int lastOrderNumber;
+    private int nextOrderNumber;
     
     public final String baseSavePath = "saves\\";
 
     public WWWEnvironment(){
         this.nextCustomerNumber = 0;
-        this.lastOrderNumber = 0;
+        this.nextOrderNumber = 0;
         this.payments = new ArrayList<>();
         this.orders = new ArrayList<>();
         this.customers = new ArrayList<>();
@@ -162,8 +164,9 @@ public class WWWEnvironment {
         }*/
     
     
-    public Order addOrder(Customer customer, String brand, String level, String comment,LocalDate orderDate) {
-        int number = ++lastOrderNumber;
+    public Order addOrder(Customer customer, String brand, String level, LocalDate orderDate, String comment) {
+        int number = nextOrderNumber;
+        nextOrderNumber++;
         while (orders.size()<=number) 
             orders.add(null);
         Order order = new Order(customer, brand,level,orderDate,comment,number);
@@ -179,7 +182,7 @@ public class WWWEnvironment {
     }
     
     public void addRepairPrice(String brand,String level,int price,int returnTime) {
-        repairPriceTable.addPrice(brand,level,new RepairPriceEntry(brand, level, price, returnTime));
+        repairPriceTable.addPrice(brand,level,new RepairPriceEntry(price, returnTime));
     }
     
     public Customer addCustomer(String firstName, String lastName) {
@@ -216,15 +219,21 @@ public class WWWEnvironment {
                 .toArray(Payment[]::new);
     }
 
+    public void setNextCustomerNumber(int number) {
+        nextCustomerNumber = number;
+    }
+    
+    public void setNextOrderNumber(int number) {
+        nextOrderNumber = number;
+    }
     
     public String getStatementReport() {
-        throw new UnsupportedOperationException();
+        PrintStatementsCommand statementsCommand = new PrintStatementsCommand(this);
+        return statementsCommand.getStatements();
     }
     
     public String getAccountsReceiveableReport(){
-        throw new UnsupportedOperationException();
+        PrintReceivablesCommand receivablesCommand = new PrintReceivablesCommand(this);
+        return receivablesCommand.getReceivables();
     } 
-
-
 }
-
