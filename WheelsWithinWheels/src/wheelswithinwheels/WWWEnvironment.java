@@ -47,34 +47,6 @@ public class WWWEnvironment {
 
     }
     
-    /*
-    public void makeFile(String file_path, String fileName) throws FileNotFoundException{
-        //creates the file
-        File file = new File(file_path);
-        //names the file
-        file = new File(fileName + ".txt");
-    }
-    public void saveToFile(String text, String file_path, boolean addValue) throws IOException{
-        FileWriter writing = new FileWriter(file_path, addValue);
-        PrintWriter saveToLine = new PrintWriter(writing);
-        //adds to file
-        saveToLine.printf( "%s" + "%n" , text);
-        //finishes the edits
-        saveToLine.close();
-    }
-    
-    public String readFromFile(String fileName) throws FileNotFoundException, IOException{
-        //create method for reading from file
-        FileReader reader = new FileReader(fileName);
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        String line = null;
-        String information = "";
-        while((line = bufferedReader.readLine()) != null) {
-            information += line;
-        }   
-        return information;
-    }
-    */
     public Order[] getOrders() { 
         return orders.stream()
             .filter(Objects::nonNull)
