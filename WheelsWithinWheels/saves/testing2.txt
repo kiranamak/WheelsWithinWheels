@@ -1,0 +1,12 @@
+%s%nrncn 0
+addc Jane Smith%s%nrncn 1
+addc Jeffery Stulin%s%nrncn 2
+addc John Doe%s%nrncn 3
+addc Alan Crosby%s%nrncn 4
+addc Asa Zeren%s%nrncn 5
+addc Andrew Stadnicki%s%nrncn 6
+addc Kiran Mak%s%nrncn 7
+addc Theodore Rosevelt%s%nrncn 8
+addc Joseph Stalin%s%nrncn 9
+addc George Washington%s%nrncn 10
+addc Marie Curie%s%n
