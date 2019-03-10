@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class CommandUI {
 
     private Scanner scanner;
-    private String welcomeMessage = "";
+    private String welcomeMessage = "Welcome, please enter a command (type help for a list of available commands):";
     private String prompt = ">";
     private HashMap<String, Command<?>> commandMap;
     private boolean running = false;
