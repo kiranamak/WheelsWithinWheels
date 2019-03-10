@@ -137,7 +137,7 @@ public class WWWEnvironment {
                 .flatMap(s->s)
                 .forEach((BikeShopSaveable saveable) -> {
                     try {
-                        writer.write(saveable.getSaveText(this)+"\n");
+                        writer.write(saveable.getSaveText(this)+"\r\n");
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -145,24 +145,6 @@ public class WWWEnvironment {
             );
         }
     }
-        /*String file_path = "desktop";
-        makeFile(file_path, filename+".txt");
-        for(String brand: getPricesTable().getBrands()){
-        for(TuneupLevel level: getPricesTable().getLevels()){
-        saveToFile(getPricesTable().saveFileText(brand, level), file_path + filename, true);
-        }
-        }
-        int i = 0;
-        for(i = 0; i <= getCustomersByNumber().length; i++){
-        saveToFile(getCustomersByNumber()[i].saveFileText(), file_path + filename, true);
-        }
-        for(i = 0; i <= getOrders().length; i++){
-        saveToFile(getOrders()[i].saveFileText(), file_path + filename, true);
-        }
-        for(i = 0; i <= getPayments().length; i++){
-        saveToFile(getPayments()[i].saveFileText(), file_path + filename, true);
-        }*/
-    
     
     public Order addOrder(Customer customer, String brand, String level, LocalDate orderDate, String comment) {
         int number = nextOrderNumber;
