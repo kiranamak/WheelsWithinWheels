@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import wheelswithinwheels.wwwui.PrintReceivablesCommand;
 import wheelswithinwheels.wwwui.PrintStatementsCommand;
+import wheelswithinwheels.wwwui.PrintTotalReceivablesCommand;
 
 /**
  *
@@ -189,5 +190,10 @@ public class WWWEnvironment {
     public String getAccountsReceiveableReport(){
         PrintReceivablesCommand receivablesCommand = new PrintReceivablesCommand(this);
         return receivablesCommand.getReceivables();
-    } 
+    }
+    
+    public String getTotalReceivableReport() {
+        PrintTotalReceivablesCommand ptr = new PrintTotalReceivablesCommand(this);
+        return ptr.getReceivablesTotals();
+    }
 }

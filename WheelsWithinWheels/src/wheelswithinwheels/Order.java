@@ -65,23 +65,22 @@ public class Order implements Transaction {
 
     @Override
     public String getReport(WWWEnvironment environment) {
-        //TODO: Should use StringBuilder.
-        String report = "";
-        report += orderDate + "\t";
-        report += "#" + String.valueOf(orderNumber);
-        report += status.value();
-        report += customer.shortReport();
-        report += brand;
-        report += level + "; ";
-        report += "due:" + getPromisedDate(environment);
-        if (!comment.equals("")) { report += " comment: " + comment; }
-        return report;
+        StringBuilder report = new StringBuilder();
+        report.append(orderDate).append("\t");
+        report.append("#").append(String.valueOf(orderNumber));
+        report.append(status.value());
+        report.append(customer.shortReport());
+        report.append(brand);
+        report.append(level).append("; ");
+        report.append("due:").append(getPromisedDate(environment));
+        if (!comment.equals("")) { report.append(" comment: ").append(comment); }
+        return report.toString();
     }
     
     public String shortReport() {
         StringBuilder report = new StringBuilder();
-        report.append("Order #" + orderNumber);
-        report.append(brand + ", " + level);
+        report.append("Order #").append(orderNumber);
+        report.append(brand).append(", ").append(level);
         return report.toString();
     }
     

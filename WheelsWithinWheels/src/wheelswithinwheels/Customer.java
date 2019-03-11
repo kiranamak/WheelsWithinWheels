@@ -59,6 +59,19 @@ public class Customer implements BikeShopSaveable{
         return new Receivable(amountReceivable, amountPaid);
     }
     
+    private String[] orderStatement(Order t, WWWEnvironment environment, String date, String filler) {
+        String description = t.shortReport();
+        int amount = t.getRepairPrice(environment).getPrice();
+        String[] toReturn = {date, description, Integer.toString(amount), filler};
+        return toReturn;
+    }
+    
+    private String[] paymentStatement(Payment t, String date, String filler) {
+        String description = "Payment";
+        int paid = ((Payment) t).getAmount();
+        String[] toReturn = {date, description, filler, Integer.toString(paid)};
+        return toReturn;
+    }
     
     public String statementReport(Transaction[] transactions,WWWEnvironment environment) {
         TableView table = new TableView(4);
@@ -68,16 +81,11 @@ public class Customer implements BikeShopSaveable{
             table.addRow(columnHeader);
             for (Transaction t: transactions) {
                 String date = t.getDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-                String description = "";
                 if(t instanceof Order) {
-                    description = ((Order) t).shortReport();
-                    int amount = ((Order) t).getRepairPrice(environment).getPrice();
-                    String[] row = {date, description, Integer.toString(amount), filler};
+                    String[] row = orderStatement((Order) t, environment, date, filler);
                     table.addRow(row);
                 } else {
-                    description = "Payment";
-                    int paid = ((Payment) t).getAmount();
-                    String[] row = {date, description, filler, Integer.toString(paid)};
+                    String[] row = paymentStatement((Payment) t, date, filler);
                     table.addRow(row);
                 }
             }
@@ -90,11 +98,10 @@ public class Customer implements BikeShopSaveable{
     }
     
     public String shortReport() {
-        //TODO: Should use StringBuilder.
-        String report = "";
-        report += firstName + " " + lastName;
-        report += "(" + customerNumber + ")";
-        return report;
+        StringBuilder report = new StringBuilder();
+        report.append(firstName).append(" ").append(lastName);
+        report.append("(").append(customerNumber).append(")");
+        return report.toString();
     }
     
     

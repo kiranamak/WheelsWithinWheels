@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 package wheelswithinwheels.wwwui;
-import commandui.ArgumentedCommand;
+import commandui.Command;
 import commandui.CommandUIArgumentException;
 import wheelswithinwheels.Customer;
 import wheelswithinwheels.WWWEnvironment;
 import java.time.LocalDate;
 import java.util.Arrays;
-import wheelswithinwheels.RepairPriceTable;
 /**
  *
  * @author kmak
  */
-public class AddOrderCommand extends ArgumentedCommand<WWWEnvironment> {
+public class AddOrderCommand extends Command<WWWEnvironment> {
     public AddOrderCommand(WWWEnvironment environment) {
         super(environment);
     }
@@ -26,7 +25,7 @@ public class AddOrderCommand extends ArgumentedCommand<WWWEnvironment> {
     }
     
     public int argumentCountMinimum() {
-        return 5;
+        return 4;
     }
     
     private void checkRepairPrice(String brand, String level) throws CommandUIArgumentException {
@@ -36,19 +35,28 @@ public class AddOrderCommand extends ArgumentedCommand<WWWEnvironment> {
     }
 
     @Override
-    public void run(String[] args) throws CommandUIArgumentException{
-        if (args.length != argumentCountMinimum()) {
-            throw new CommandUIArgumentException(argumentCountMinimum(), args.length);
+    public void run(String args) throws CommandUIArgumentException{
+        int spaces = (int) args.chars().filter(c -> c == (int)' ').count();
+        if (spaces < argumentCountMinimum()) {
+            throw new CommandUIArgumentException(argumentCountMinimum(), spaces + 1);
         }
+        String[] rawArgs = args.split("\\s+");
+        String[] sepArgs = Arrays.stream(rawArgs, 0, 3)
+                .filter((s) -> !s.equals(""))
+                .toArray(String[]::new);
         
-        int customerNumber = parseIntArgument(0, args);
+        int customerNumber = parseIntArgument(0, sepArgs);
         Customer customer = environment.getCustomer(customerNumber);
-        LocalDate date = parseDateArgument(1, args, environment.dateFormatter);
-        checkRepairPrice(args[2], args[3]);
-        String[] commentArray = Arrays.copyOfRange(args, 4, args.length);
-        String comment = Arrays.toString(commentArray);
+        LocalDate date = parseDateArgument(1, sepArgs, environment.dateFormatter);
+        checkRepairPrice(sepArgs[2], sepArgs[3]);
         
-        environment.addOrder(customer, args[2], args[3], date, comment);
+        int nonCommentLength = 0;
+        for (String s: sepArgs) {
+            nonCommentLength += s.length();
+        }
+        String comment = args.substring(nonCommentLength + 1, args.length() - 1);
+        
+        environment.addOrder(customer, sepArgs[2], sepArgs[3], date, comment);
     }
     
     @Override

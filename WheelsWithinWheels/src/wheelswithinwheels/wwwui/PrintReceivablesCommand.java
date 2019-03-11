@@ -38,14 +38,19 @@ public class PrintReceivablesCommand extends ArgumentlessCommand<WWWEnvironment>
         System.out.println(getReceivables());
     }
     
+    public String receivableTotals(int totalReceivable, int totalPaid, int totalOutstanding) { 
+        String receivables = "";
+            receivables = "Total Amount Receivable: $" + totalReceivable + "\n"
+            + "Total Amount Paid: $" + totalPaid + "\n"
+            + "Total Amount Outstanding: $" + totalOutstanding + "\n";
+            
+        return receivables;
+    }
+    
     public String getReceivables() {
         String receivables = "";
         
         TableView table = new TableView(5);
-        int totalReceivable = 0;
-        int totalPaid = 0;
-        int totalOutstanding = 0;
-        
         String[] columnHeader = {"#", "Name", "Receivable", "Paid", "Outstanding"};
         
         try {
@@ -54,18 +59,13 @@ public class PrintReceivablesCommand extends ArgumentlessCommand<WWWEnvironment>
                 Receivable data = c.receivableReport(environment.getTransactionsByDate(),environment);
                 String[] report = {Integer.toString(c.getCustomerNumber()), c.getFullName(), "$" + Integer.toString(data.getReceivable()), "$" + Integer.toString(data.getPaid()), "$" + Integer.toString(data.getOutstanding())};
                 table.addRow(report);
-                
-                totalReceivable += data.getReceivable();
-                totalPaid += data.getPaid();
-                totalOutstanding += data.getOutstanding();
             }   
         } catch (TableViewWidthOverflowException ex) {
                 throw new RuntimeException("Somehow receivables table has incorrect width.");
         }
         
-        receivables += "Total Amount Receivable: $" + totalReceivable + "\n"
-            + "Total Amount Paid: $" + totalPaid + "\n"
-            + "Total Amount Outstanding: $" + totalOutstanding + "\n";
+        PrintTotalReceivablesCommand ptr = new PrintTotalReceivablesCommand(environment);
+        receivables += ptr.getReceivablesTotals();
         
         HorizontalAlignDirection[] format = {RIGHT,LEFT, RIGHT, RIGHT, RIGHT};
         table.horizontalAlign(format);
