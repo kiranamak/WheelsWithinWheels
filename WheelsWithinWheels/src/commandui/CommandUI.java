@@ -59,9 +59,10 @@ public class CommandUI {
     public void run() {
         this.running = true;
         setup();
-        System.out.println(welcomeMessage);
+        System.out.println(welcomeMessage + "\n>");
         while (running) {
             runPrompt();
+            System.out.print(prompt);
             if (!scanner.hasNext()) running = false;
         }
     }
@@ -70,7 +71,6 @@ public class CommandUI {
     }
 
     private final void runPrompt() {
-        System.out.print(prompt);
         String commandName = scanner.next();
         String argString = scanner.nextLine();
         Command command = commandMap.get(commandName);
