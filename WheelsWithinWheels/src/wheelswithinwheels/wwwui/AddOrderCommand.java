@@ -37,11 +37,11 @@ public class AddOrderCommand extends Command<WWWEnvironment> {
     @Override
     public void run(String args) throws CommandUIArgumentException{
         int spaces = (int) args.chars().filter(c -> c == (int)' ').count();
-        if (spaces < argumentCountMinimum()) {
+        if (spaces < argumentCountMinimum() - 1) {
             throw new CommandUIArgumentException(argumentCountMinimum(), spaces + 1);
         }
         String[] rawArgs = args.split("\\s+");
-        String[] sepArgs = Arrays.stream(rawArgs, 0, 3)
+        String[] sepArgs = Arrays.stream(rawArgs, 0, 4)
                 .filter((s) -> !s.equals(""))
                 .toArray(String[]::new);
         

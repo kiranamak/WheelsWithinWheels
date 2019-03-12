@@ -6,6 +6,7 @@
 
 package wheelswithinwheels;
 
+import commandui.CommandUIArgumentException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,14 +151,24 @@ public class WWWEnvironment {
         return customer;
     }
 
-    public Customer getCustomer(int customerNumber) {
-        Customer customer =  customers.get(customerNumber);
+    public Customer getCustomer(int customerNumber) throws CommandUIArgumentException {
+        Customer customer;
+        try {
+            customer = customers.get(customerNumber);
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandUIArgumentException("Invalid customer number");
+        }
         assert(customer == null || customer.getCustomerNumber()==customerNumber);
         return customer;
     }
     
-    public Order getOrder(int orderNumber) {
-        Order order =  orders.get(orderNumber);
+    public Order getOrder(int orderNumber) throws CommandUIArgumentException {
+        Order order;
+        try {
+            order = orders.get(orderNumber);
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandUIArgumentException("Invalid order number");
+        }
         assert(order == null || order.getOrderNumber()==orderNumber);
         return order;
     }

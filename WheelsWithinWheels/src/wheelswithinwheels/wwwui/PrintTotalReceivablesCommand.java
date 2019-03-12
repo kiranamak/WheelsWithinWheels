@@ -27,7 +27,7 @@ public class PrintTotalReceivablesCommand extends ArgumentlessCommand<WWWEnviron
 
     @Override
     public String getName() {
-        return "printr";
+        return "printtr";
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PrintTotalReceivablesCommand extends ArgumentlessCommand<WWWEnviron
     
     @Override
     public String getHelpText(){
-        return "Display a report of all accounts revievable";
+        return "Display a report of total accounts revievable";
     }
     
 }
