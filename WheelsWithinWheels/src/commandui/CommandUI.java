@@ -59,7 +59,8 @@ public class CommandUI {
     public void run() {
         this.running = true;
         setup();
-        System.out.println(welcomeMessage + "\n>");
+        System.out.println(welcomeMessage);
+        System.out.print(">");
         while (running) {
             runPrompt();
             System.out.print(prompt);
