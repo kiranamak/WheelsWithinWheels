@@ -62,14 +62,14 @@ public class Customer implements BikeShopSaveable{
     private String[] orderStatement(Order t, WWWEnvironment environment, String date, String filler) {
         String description = t.shortReport();
         int amount = t.getRepairPrice(environment).getPrice();
-        String[] toReturn = {date, description, Integer.toString(amount), filler};
+        String[] toReturn = {date, description, "$" + Integer.toString(amount), filler};
         return toReturn;
     }
     
     private String[] paymentStatement(Payment t, String date, String filler) {
         String description = "Payment";
         int paid = ((Payment) t).getAmount();
-        String[] toReturn = {date, description, filler, Integer.toString(paid)};
+        String[] toReturn = {date, description, filler, "$" + Integer.toString(paid)};
         return toReturn;
     }
     

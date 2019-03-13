@@ -7,6 +7,9 @@ package wheelswithinwheels.wwwui;
 import wheelswithinwheels.WWWEnvironment;
 import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
+import java.util.Arrays;
+import wheelswithinwheels.Order;
+import wheelswithinwheels.Payment;
 import wheelswithinwheels.Transaction;
 
 /**
@@ -35,6 +38,16 @@ public class PrintTransactionsCommand extends ArgumentlessCommand<WWWEnvironment
     @Override
     public void run() throws CommandUIArgumentException {
         Transaction[] transactions = environment.getTransactionsByDate();
+        if (orders && !payments) {
+            transactions = Arrays.stream(transactions)
+                    .filter(Order.class::isInstance)
+                    .toArray(Transaction[]::new);
+        }
+        if (payments && !orders) {
+            transactions = Arrays.stream(transactions)
+                    .filter(Payment.class::isInstance)
+                    .toArray(Transaction[]::new);
+        }
         for (Transaction transaction: transactions) {
             System.out.println(transaction.getReport(environment));
         }

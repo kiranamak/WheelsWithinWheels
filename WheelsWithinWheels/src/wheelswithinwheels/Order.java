@@ -69,11 +69,11 @@ public class Order implements Transaction {
         report.append(orderDate).append("\t");
         report.append("ORDER:  \t");
         report.append("#").append(String.valueOf(orderNumber)).append(" ");
-        report.append(status.value());
+        report.append(status.value()).append(" ");
         report.append(customer.shortReport()).append(" ");
         report.append(brand).append(" ");
         report.append(level).append("; ");
-        report.append("due:").append(getPromisedDate(environment));
+        report.append("due: ").append(getPromisedDate(environment));
         if (!comment.equals("")) { report.append(" comment: ").append(comment); }
         return report.toString();
     }

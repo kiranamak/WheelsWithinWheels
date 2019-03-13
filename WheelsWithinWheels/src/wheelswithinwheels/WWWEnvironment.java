@@ -162,6 +162,14 @@ public class WWWEnvironment {
         return customer;
     }
     
+    public Customer getCustomer(String fName, String lName) throws CommandUIArgumentException {
+        Customer customer;
+        for (Customer c: customers) {
+            if (c.getFullName().equals(fName + " " + lName)) { return c; } 
+        }
+        return null;
+    }
+    
     public Order getOrder(int orderNumber) throws CommandUIArgumentException {
         Order order;
         try {
