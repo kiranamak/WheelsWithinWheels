@@ -14,4 +14,5 @@ public interface Transaction extends BikeShopSaveable{
 
     String getReport(WWWEnvironment environment);
     LocalDate getDate();
+    Customer getCustomer();
 }

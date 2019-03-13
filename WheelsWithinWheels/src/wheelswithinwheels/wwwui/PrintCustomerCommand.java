@@ -41,10 +41,10 @@ public class PrintCustomerCommand extends ArgumentedCommand<WWWEnvironment> {
         }
         if (args.length == 1) {
             int customerNumber = parseIntArgument(0, args);
-            environment.getCustomer(customerNumber);
+            c = environment.getCustomer(customerNumber);
         }
         if (args.length == 2) {
-            environment.getCustomer(args[0], args[1]);
+            c = environment.getCustomer(args[0], args[1]);
         }
         System.out.println(c.shortReport());
     }

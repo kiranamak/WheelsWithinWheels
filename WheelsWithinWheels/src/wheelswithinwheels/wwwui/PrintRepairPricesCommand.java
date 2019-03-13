@@ -47,8 +47,8 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
             table.addRow(headers);
             for (String brand:brands){
                 Stream<String> rowData = levels.stream()
-                                .map((String level)->pricesTable.getPrice(brand,level))
-                                .map((RepairPriceEntry price)->
+                        .map((String level)->pricesTable.getPrice(brand,level))
+                        .map((RepairPriceEntry price)->
                                         "$"+Integer.toString(price.getPrice())
                                         +", "+Integer.toString(price.getRepairLength())+" days");
                 String[] row = Stream.concat(Stream.of(brand),rowData).toArray(String[]::new);

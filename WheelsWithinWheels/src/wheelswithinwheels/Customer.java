@@ -50,10 +50,12 @@ public class Customer implements BikeShopSaveable{
         int amountPaid = 0;
         
         for(Transaction transaction: transactions) {
-            if (transaction instanceof Order) {
-                amountReceivable += ((Order) transaction).getRepairPrice(environment).getPrice();
-            } else {
-                amountPaid += ((Payment) transaction).getAmount();
+            if (transaction.getCustomer().getCustomerNumber() == getCustomerNumber()) {
+                if (transaction instanceof Order) {
+                    amountReceivable += ((Order) transaction).getRepairPrice(environment).getPrice();
+                } else {
+                    amountPaid += ((Payment) transaction).getAmount();
+                }
             }
         }
         return new Receivable(amountReceivable, amountPaid);
@@ -80,13 +82,15 @@ public class Customer implements BikeShopSaveable{
         try {
             table.addRow(columnHeader);
             for (Transaction t: transactions) {
-                String date = t.getDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-                if(t instanceof Order) {
-                    String[] row = orderStatement((Order) t, environment, date, filler);
-                    table.addRow(row);
-                } else {
-                    String[] row = paymentStatement((Payment) t, date, filler);
-                    table.addRow(row);
+                if (t.getCustomer().getCustomerNumber() == getCustomerNumber()) {
+                    String date = t.getDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+                    if(t instanceof Order) {
+                        String[] row = orderStatement((Order) t, environment, date, filler);
+                        table.addRow(row);
+                    } else {
+                        String[] row = paymentStatement((Payment) t, date, filler);
+                        table.addRow(row);
+                    }
                 }
             }
         } catch (TableViewWidthOverflowException ex) {

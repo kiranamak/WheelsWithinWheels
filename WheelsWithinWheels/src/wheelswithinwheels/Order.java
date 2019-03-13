@@ -85,7 +85,7 @@ public class Order implements Transaction {
         return report.toString();
     }
     
-    Customer getCustomer(){
+    public Customer getCustomer(){
         return customer;
     }
     
