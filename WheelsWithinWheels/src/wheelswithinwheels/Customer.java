@@ -100,7 +100,7 @@ public class Customer implements BikeShopSaveable{
     public String shortReport() {
         StringBuilder report = new StringBuilder();
         report.append(firstName).append(" ").append(lastName);
-        report.append("(").append(customerNumber).append(")");
+        report.append("(#").append(customerNumber).append(")");
         return report.toString();
     }
     

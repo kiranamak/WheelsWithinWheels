@@ -41,6 +41,7 @@ public class PrintCustomersCommand extends ArgumentlessCommand<WWWEnvironment>{
         switch (sort){
             case NAME:
                 customers = environment.getCustomersByName();
+                break;
             case NUMBER:
                 customers = environment.getCustomersByNumber();         
         }

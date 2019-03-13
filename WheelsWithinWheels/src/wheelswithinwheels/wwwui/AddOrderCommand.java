@@ -29,7 +29,7 @@ public class AddOrderCommand extends Command<WWWEnvironment> {
     }
     
     private void checkRepairPrice(String brand, String level) throws CommandUIArgumentException {
-        if (environment.getRepairPriceTable().getPrice(level, brand) == null) {
+        if (environment.getRepairPriceTable().getPrice(brand, level) == null) {
             throw new CommandUIArgumentException("Invalid repair brand and level combination");
         }
     }
@@ -54,7 +54,7 @@ public class AddOrderCommand extends Command<WWWEnvironment> {
         for (String s: sepArgs) {
             nonCommentLength += s.length();
         }
-        String comment = args.substring(nonCommentLength + 1, args.length() - 1);
+        String comment = args.substring(nonCommentLength + spaces, args.length());
         
         environment.addOrder(customer, sepArgs[2], sepArgs[3], date, comment);
     }

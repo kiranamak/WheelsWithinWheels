@@ -16,10 +16,12 @@ import java.io.InputStream;
  */
 public class ReadCommandsCommand extends KnownLengthArgumentListCommand<WWWUI>{
     private final boolean reset;
+    private final boolean echo;
     
     public ReadCommandsCommand(WWWUI enviroment,boolean reset){
         super(enviroment);
         this.reset = reset;
+        echo = !reset;
     }
 
     @Override
@@ -35,8 +37,8 @@ public class ReadCommandsCommand extends KnownLengthArgumentListCommand<WWWUI>{
     @Override
     public void run(String[] args){
         if (reset) environment.environment.reset();
-        WWWUI subUI = new WWWUI(environment.environment);
-        String fileName = environment.environment.baseSavePath+args[0]+".txt";
+        WWWUI subUI = new WWWUI(environment.environment, echo);
+        String fileName = /*environment.environment.baseSavePath+*/args[0]+".txt";
         InputStream inStream;
         try {
             inStream = new FileInputStream(fileName);

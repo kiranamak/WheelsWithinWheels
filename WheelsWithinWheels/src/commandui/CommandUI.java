@@ -22,14 +22,15 @@ public class CommandUI {
     private String prompt = ">";
     private HashMap<String, Command<?>> commandMap;
     private boolean running = false;
+    private boolean echo;
 
-    public CommandUI(){
+    public CommandUI(boolean echo){
         this.scanner = new Scanner(System.in);
-        
+        this.echo = echo;
     }
     
-    public CommandUI(Command[] commands) {
-        this();
+    public CommandUI(Command[] commands, boolean echo) {
+        this(echo);
         updateCommands(commands);
     }
 
@@ -75,6 +76,9 @@ public class CommandUI {
         String commandName = scanner.next();
         String argString = scanner.nextLine();
         Command command = commandMap.get(commandName);
+        if (echo) {
+            System.out.println(commandName + " " + argString);
+        }
         if (command == null) {
             reportUnknownCommand();
             postCommand();

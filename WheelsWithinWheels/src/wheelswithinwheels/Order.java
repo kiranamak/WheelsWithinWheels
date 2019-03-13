@@ -67,10 +67,11 @@ public class Order implements Transaction {
     public String getReport(WWWEnvironment environment) {
         StringBuilder report = new StringBuilder();
         report.append(orderDate).append("\t");
-        report.append("#").append(String.valueOf(orderNumber));
+        report.append("ORDER:  \t");
+        report.append("#").append(String.valueOf(orderNumber)).append(" ");
         report.append(status.value());
-        report.append(customer.shortReport());
-        report.append(brand);
+        report.append(customer.shortReport()).append(" ");
+        report.append(brand).append(" ");
         report.append(level).append("; ");
         report.append("due:").append(getPromisedDate(environment));
         if (!comment.equals("")) { report.append(" comment: ").append(comment); }
@@ -79,7 +80,7 @@ public class Order implements Transaction {
     
     public String shortReport() {
         StringBuilder report = new StringBuilder();
-        report.append("Order #").append(orderNumber);
+        report.append("Order #").append(orderNumber).append(" ");
         report.append(brand).append(", ").append(level);
         return report.toString();
     }

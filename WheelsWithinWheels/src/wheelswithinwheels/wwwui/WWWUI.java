@@ -17,14 +17,14 @@ import wheelswithinwheels.wwwui.PrintCustomersCommand.CustomerSort;
  */
 public class WWWUI extends CommandUI{
     WWWEnvironment environment;
+    boolean echo;
     
-    
-    public WWWUI(){
-        this(new WWWEnvironment());
+    public WWWUI(boolean echo){
+        this(new WWWEnvironment(), echo);
     }
     
-    public WWWUI(WWWEnvironment environment){
-        super();
+    public WWWUI(WWWEnvironment environment, boolean echo){
+        super(echo);
         this.environment = environment;
         Command<?>[] commands = new Command<?>[]{
             new AddCustomerCommand(this.environment),

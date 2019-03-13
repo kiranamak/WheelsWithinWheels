@@ -8,6 +8,7 @@ package wheelswithinwheels.wwwui;
 import commandui.ArgumentlessCommand;
 import commandui.CommandUIArgumentException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import wheelswithinwheels.WWWEnvironment;
 
 /**
@@ -28,7 +29,7 @@ public class TodayCommand extends ArgumentlessCommand<WWWEnvironment>{
     @Override
     public void run() throws CommandUIArgumentException {
         LocalDate today = LocalDate.now();
-        System.out.println(today.format(environment.dateFormatter));
+        System.out.println(today.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
     }
     
     @Override

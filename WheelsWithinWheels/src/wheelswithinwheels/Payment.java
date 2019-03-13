@@ -41,6 +41,7 @@ public class Payment implements Transaction {
     public String getReport(WWWEnvironment environment) {
         StringBuilder report = new StringBuilder();
         report.append(date).append("\t");
+        report.append("PAYMENT:\t");
         report.append("$").append(String.valueOf(amount));
         report.append(customer.shortReport());
         return report.toString();

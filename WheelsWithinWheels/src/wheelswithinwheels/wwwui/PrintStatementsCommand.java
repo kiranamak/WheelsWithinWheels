@@ -85,7 +85,7 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
             
             if (totals.getOutstanding() != 0) {
                 statements += dashedLine + "\n"
-                    + "Please make payments within the week";
+                    + "Please make payments within the week\n";
             }
             statements += dashedLine + "\n"
                 + "THANK YOU FOR CHOOSING WHEELS WITHIN WHEELS BIKE SHOP!\n"
