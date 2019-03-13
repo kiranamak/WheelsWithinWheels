@@ -167,7 +167,7 @@ public class WWWEnvironment {
         for (Customer c: customers) {
             if (c.getFullName().equals(fName + " " + lName)) { return c; } 
         }
-        return null;
+        throw new CommandUIArgumentException("Invalid customer name");
     }
     
     public Order getOrder(int orderNumber) throws CommandUIArgumentException {
