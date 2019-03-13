@@ -56,6 +56,5 @@ public class WWWUI extends CommandUI{
         addQuitCommand("quit");
         //System.out.println("Initialized");
         //System.out.println(getCommands());
-    }
-    
+    }  
 }

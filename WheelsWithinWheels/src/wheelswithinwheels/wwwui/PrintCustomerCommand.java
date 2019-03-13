@@ -47,8 +47,5 @@ public class PrintCustomerCommand extends ArgumentedCommand<WWWEnvironment> {
             c = environment.getCustomer(args[0], args[1]);
         }
         System.out.println(c.shortReport());
-    }
-
-    
-    
+    }    
 }

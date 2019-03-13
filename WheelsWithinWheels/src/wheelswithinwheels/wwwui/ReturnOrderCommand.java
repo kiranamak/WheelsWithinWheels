@@ -47,6 +47,5 @@ public class ReturnOrderCommand extends KnownLengthArgumentListCommand<WWWEnviro
     @Override
     public String getHelpText(){
         return "Marks an order as returned to the customer";
-    }
-    
+    }  
 }

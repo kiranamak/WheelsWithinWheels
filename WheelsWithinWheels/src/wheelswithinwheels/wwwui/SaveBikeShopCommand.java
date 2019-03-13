@@ -49,6 +49,5 @@ public class SaveBikeShopCommand extends KnownLengthArgumentListCommand<WWWEnvir
     @Override
     public String getHelpText(){
         return "Saves the bike shop to a file";
-    }
-    
+    }   
 }

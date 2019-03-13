@@ -35,6 +35,4 @@ public class WidenableTableView extends TableView {
                 .max()
                 .orElse(0);
     }
-
-    
 }

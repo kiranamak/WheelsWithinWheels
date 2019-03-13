@@ -50,6 +50,5 @@ public class AddPaymentCommand extends KnownLengthArgumentListCommand<WWWEnviron
     @Override
     public String getHelpText(){
         return "Create a new payment";
-    }
-    
+    }  
 }

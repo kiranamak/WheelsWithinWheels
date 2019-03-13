@@ -14,5 +14,4 @@ public class TableViewWidthOverflowException extends Exception {
     public TableViewWidthOverflowException() {
         super("Tried to add row to table, but row was too large.");
     }
-
 }

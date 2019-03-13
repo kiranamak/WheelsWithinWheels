@@ -33,7 +33,7 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
     public String getName() {
         return "printrp";
     }
-
+    
     @Override
     public void run() throws CommandUIArgumentException {
         RepairPriceTable pricesTable = environment.getRepairPriceTable();
@@ -48,6 +48,7 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
             for (String brand:brands){
                 Stream<String> rowData = levels.stream()
                         .map((String level)->pricesTable.getPrice(brand,level))
+                        .filter((RepairPriceEntry price) -> price != null)
                         .map((RepairPriceEntry price)->
                                         "$"+Integer.toString(price.getPrice())
                                         +", "+Integer.toString(price.getRepairLength())+" days");

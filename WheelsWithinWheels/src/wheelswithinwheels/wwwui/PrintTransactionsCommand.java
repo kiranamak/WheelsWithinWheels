@@ -62,5 +62,4 @@ public class PrintTransactionsCommand extends ArgumentlessCommand<WWWEnvironment
         if (payments) return base+"payments";
         throw new IllegalStateException("Cannot print nothing");
     }
-
 }

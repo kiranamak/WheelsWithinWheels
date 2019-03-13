@@ -98,6 +98,5 @@ public class PrintStatementsCommand extends ArgumentlessCommand<WWWEnvironment> 
     public String getHelpText(){
         return "Display statements for each customer.";
     }
-
 }
 

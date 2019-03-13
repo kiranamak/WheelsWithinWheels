@@ -119,7 +119,4 @@ public class Order implements Transaction {
                 +getRepairLevel()+" "
                 +comment;
     }
-    
-    
-
 }
