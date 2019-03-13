@@ -41,8 +41,8 @@ public class PrintRepairPricesCommand extends ArgumentlessCommand<WWWEnvironment
         SortedSet<String> levels = new TreeSet<>(Arrays.asList(pricesTable.getLevels()));
         TableView table = new TableView(levels.size() + 1);
         String[] headers = Stream.concat(Stream.of("Prices"),
-                levels.stream().map(Object::toString)
-        ).toArray(String[]::new);
+                levels.stream().map(Object::toString))
+                .toArray(String[]::new);
         try {
             table.addRow(headers);
             for (String brand:brands){

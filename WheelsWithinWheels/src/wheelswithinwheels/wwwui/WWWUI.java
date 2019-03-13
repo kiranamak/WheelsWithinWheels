@@ -48,9 +48,12 @@ public class WWWUI extends CommandUI{
             new SaveBikeShopCommand(this.environment),
             new SetNextCustomerNumberCommand(this.environment),
             new SetNextOrderNumberCommand(this.environment),
-            new PrintTotalReceivablesCommand(this.environment)
+            new PrintTotalReceivablesCommand(this.environment),
+            new PrintCustomerCommand(this.environment),
+            new PrintOrderByNumberCommand(this.environment)
         };
         updateCommands(commands);
+        addQuitCommand("quit");
         //System.out.println("Initialized");
         //System.out.println(getCommands());
     }

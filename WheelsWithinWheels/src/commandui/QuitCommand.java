@@ -22,6 +22,11 @@ public class QuitCommand extends ArgumentlessCommand<CommandUI> {
     public String getName() {
         return name;
     }
+    
+    @Override
+    public String getHelpText() {
+        return "Quits the program without saving";
+    }
 
     @Override
     public void run() throws CommandUIArgumentException {

@@ -38,7 +38,7 @@ public class ReadCommandsCommand extends KnownLengthArgumentListCommand<WWWUI>{
     public void run(String[] args){
         if (reset) environment.environment.reset();
         WWWUI subUI = new WWWUI(environment.environment, echo);
-        String fileName = /*environment.environment.baseSavePath+*/args[0]+".txt";
+        String fileName = environment.environment.baseSavePath+args[0]+".txt";
         InputStream inStream;
         try {
             inStream = new FileInputStream(fileName);
