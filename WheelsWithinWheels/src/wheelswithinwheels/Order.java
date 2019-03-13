@@ -39,7 +39,7 @@ public class Order implements Transaction {
         return environment.getRepairPriceTable().getPrice(brand, level);
     }
 
-    LocalDate getPromisedDate(WWWEnvironment environment) {
+    public LocalDate getPromisedDate(WWWEnvironment environment) {
         return orderDate.plusDays(getRepairPrice(environment).getRepairLength());
     }
 

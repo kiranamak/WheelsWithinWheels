@@ -50,7 +50,8 @@ public class WWWUI extends CommandUI{
             new SetNextOrderNumberCommand(this.environment),
             new PrintTotalReceivablesCommand(this.environment),
             new PrintCustomerCommand(this.environment),
-            new PrintOrderByNumberCommand(this.environment)
+            new PrintOrderByNumberCommand(this.environment),
+            new PrintOrdersDueBeforeCommand(this.environment)
         };
         updateCommands(commands);
         addQuitCommand("quit");
